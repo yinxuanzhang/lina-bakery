@@ -1,0 +1,46 @@
+.hero-section{
+  width: 100%;
+  height: 100vh;
+}
+.hero-slider{
+  width: 100%;
+  
+  position: relative;
+  
+}
+.hero-slider img{
+  width: 100%;
+  height: 100%;
+}
+.top-header{
+  position:absolute;
+  display: flex;
+  justify-content: end;
+  gap: 40px;
+  font-size: 22px;
+  top: 20px;
+  right: 40px;
+  font-weight: 150;
+  color:orangered;
+  
+}
+.main-nav{
+  top: 100px;
+  left: 40%;
+  position:absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+.lina-bakery-logo img{
+  width: 300px;
+}
+.ul-list{
+  display: flex;
+  gap: 35px;
+  color: orangered;
+  font-size: 20px;
+  margin-top: -25px;
+}
