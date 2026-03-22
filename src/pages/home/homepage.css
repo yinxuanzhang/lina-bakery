@@ -1,16 +1,21 @@
 .hero-section{
   width: 100%;
-  height: 100vh;
+ 
 }
 .hero-slider{
   width: 100%;
-  
+  height:1300px;
   position: relative;
-  
+  overflow: hidden;
 }
-.hero-slider img{
+.slide-page{
   width: 100%;
   height: 100%;
+}
+.slide-page img{
+  
+ width: 100%;
+ height: 100%;
 }
 .top-header{
   position:absolute;
@@ -44,3 +49,40 @@
   font-size: 20px;
   margin-top: -25px;
 }
+
+/*middle banner part*/
+
+.middle-section-banner{
+  display: flex;
+  width: 60%;
+  margin: 70px auto;
+}
+.middle-section-banner p{
+  font-size: 30px;
+  color:orangered;
+}
+
+/*main products part*/
+.products-Gride{
+  width: 72%;
+  margin: 90px auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+.product{
+  aspect-ratio: 1 / 1;
+  background: #ebe7d8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.products-Gride .product img{
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+  display: block;
+}
+
+
