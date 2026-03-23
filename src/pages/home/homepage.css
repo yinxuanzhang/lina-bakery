@@ -4,7 +4,7 @@
 }
 .hero-slider{
   width: 100%;
-  height:1300px;
+  height:1400px;/*1300*/
   position: relative;
   overflow: hidden;
 }
@@ -29,8 +29,20 @@
   color:orangered;
   
 }
+.language-dropdown-wrapper{
+  position: relative;
+}
+.language-dropdown{
+  position: absolute;
+  top: 100%;
+  background: white;
+  padding: 10px 0;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  z-index: 100;
+
+}
 .main-nav{
-  top: 100px;
+  top: 10px;
   left: 40%;
   position:absolute;
   display: flex;
@@ -56,6 +68,7 @@
   display: flex;
   width: 60%;
   margin: 70px auto;
+  background-color:pink;
 }
 .middle-section-banner p{
   font-size: 30px;
@@ -64,25 +77,59 @@
 
 /*main products part*/
 .products-Gride{
-  width: 72%;
+  width: 75%;
   margin: 90px auto;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 18px;
+  background-color: blue;
 }
 .product{
+  display: flex;
+  flex-direction: column;
   aspect-ratio: 1 / 1;
-  background: #ebe7d8;
+  background-color: pink;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
 .products-Gride .product img{
-  width: 90%;
-  height: 90%;
+  width: 85%;
+  height: 85%;
   object-fit: contain;
   display: block;
 }
 
+.new-discount-product{
+  width: 100%;
+  height: 700px;
+  overflow: hidden;
+  background-color: pink;
+}
+.pages-bottom{
+  
+ 
+  width: 100%;
+  height: 500px;
+  padding-top: 80px;
+  
+  
+}
 
+.footer-information{
+  width: 80%;
+  margin:  0px auto;
+  
+  display: flex;
+  justify-content:space-evenly;
+  height: 70%;
+  font-size: 17px;
+  font-weight: 200;
+  color:orangered;
+}
+.footer-header{
+  font-size: 20px;
+  margin-bottom: 10px;
+  font-weight: 300;
+}
