@@ -1,33 +1,63 @@
 import './homepage.css'
-import { FiSearch, FiUser, FiShoppingBag, FiMessageCircle, FiGlobe } from "react-icons/fi";
-import { useState } from 'react';
+import { FaSearch, FaUser, FaShoppingBag, FaRegCommentDots, FaGlobe } from "react-icons/fa";
+import { useState,useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 export function HomePage(){
-  const[openLanguageMenue,setOpenLanguageMenue]=useState(false);
+  const[openLanguageMenu,setOpenLanguageMenu]=useState(false);
+  const[openSerachButton,setOpenSearchButton]=useState(false);
+  const[bannerIndex,setBannerIndex]=useState(0);
+  const bannerPages=["/images/lina-slider1.png",
+    "/images/lina-slider2.png",
+    "/images/lina-slider3.png"
+  ]
+  useEffect(()=>{
+    const timer=setInterval(()=>{
+      setBannerIndex((prev)=>prev===bannerPages.length-1 ? 0:prev+1);
+    },3000);
+    return ()=>clearInterval(timer);
+  },[]);
   return(<>
   
   <div className="hero-section">
   <div className="hero-slider">
-    <div className="slide-page"><img src="/images/lina-slider1.png" alt=""/></div>
-    <div className="top-header" >
-    <div className='top-header-cad'>$CAD</div>
+    {bannerPages.map((item,index)=>{
+          return(<>
+            <div className={`fade-slide ${bannerIndex === index ? 'active-slide' : ''}`} key={index}>
+            <img src={item} alt=""/>
+          </div>
+          </>)
+    })}
+  <div className="top-header" >
+    <div className='top-header-cad'><p>$CAD</p></div>
     <div className='language-dropdown-wrapper'>
-      <button className='language-dropdown-button'onClick={()=>{setOpenLanguageMenue(!openLanguageMenue)}}><FiGlobe /></button>
-      {openLanguageMenue&&(<div className='language-dropdown'>
-        <button className='language-option' onClick={()=>{setOpenLanguageMenue(false)}}>
+      <button className='language-dropdown-button'onClick={()=>{setOpenLanguageMenu(!openLanguageMenu)}}><FaGlobe /></button>
+      {openLanguageMenu&&(<div className='language-dropdown'>
+        <button className='language-option' onClick={()=>{setOpenLanguageMenu(false)}}>
           中文
         </button>
-        <button className='language-option' onClick={()=>setOpenLanguageMenue(false)}>
+        <button className='language-option' onClick={()=>setOpenLanguageMenu(false)}>
           English
         </button>
       </div>)}
     </div>
+    <div className='serach-button-wrapper'>
+      {openSerachButton&&(<input className="search-input-box" placeholder='Search Products'/>)}
+     
+      <button onClick={()=>{
+        setOpenSearchButton(!openSerachButton)
+      }}><FaSearch /></button>
+    </div>
+    <div className='user-sign-in'>
+      <Link to="/user"><button><FaUser /></button></Link>
+    </div>
     
+    <div className='go-to-order-page'>
+      <Link to="/order">
+      <button><FaShoppingBag /></button>
+      </Link>
+    </div>
     
-    {/*<input className="search-input"/>*/}
-    <button><FiSearch /></button>
-    <button><FiMessageCircle /></button>
-    <button><FiShoppingBag /></button>
     
   </div>
   
