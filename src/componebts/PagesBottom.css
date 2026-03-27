@@ -1,0 +1,35 @@
+.pages-bottom {
+  width: 100%;
+  min-height: 500px;
+  padding-top: 80px;
+}
+
+.footer-information {
+  width: 80%;
+  margin: 0 auto;
+  height: 70%;
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 17px;
+  font-weight: 200;
+  color: orangered;
+}
+
+.footer-header {
+  font-size: 20px;
+  margin-bottom: 10px;
+  font-weight: 300;
+}
+
+.footer-single-information {
+  margin-bottom: 8px;
+}
+
+.footer-information a {
+  color: orangered;
+  text-decoration: none;
+}
+
+.footer-information a:hover {
+  opacity: 0.8;
+}
