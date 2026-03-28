@@ -1,4 +1,4 @@
-import { PagesBottom } from '../../componebts/PageSBottom';
+import { PagesBottom } from '../../componebts/PagesBottom';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart} from "react-icons/fa";
 import './checkoutpage.css';
