@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { FaShoppingBag } from "react-icons/fa";
-import { PagesBottom } from '../../componebts/PageSBottom';
-import './orderpage.css';
+import { PagesBottom } from '../../componebts/PagesBottom';
+import './OrderPage.css';
 
 export function OrderPage() {
   const currentStep = 3;
