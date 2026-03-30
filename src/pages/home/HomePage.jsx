@@ -1,5 +1,5 @@
 import './homepage.css'
-import { ProductGrid } from '../../componebts/ProductsGrid';
+import axios from 'axios';
 import { useState,useEffect } from 'react';
 import { TopHeader } from '../../componebts/TopHeader';
 import { PagesBottom } from '../../componebts/PageSBottom';
@@ -12,10 +12,17 @@ export function HomePage(){
     "/images/lina-slider3.png",
     
   ]
+  const [products,setProducts]=useState([]);
+
   useEffect(()=>{
     const timer=setInterval(()=>{
       setBannerIndex((prev)=>prev===bannerPages.length-1 ? 0:prev+1);
     },3000);
+    async function loadProducts(){
+      const response= await axios.get('http://localhost:3000/api/products');
+      setProducts(response.data);
+    }
+    loadProducts();
     return ()=>clearInterval(timer);
   },[]);
   return(<>
@@ -50,7 +57,7 @@ export function HomePage(){
   </div>
 
   <div className='products-Gride'>
-    {ProductGrid.map((productType)=>{
+    {products.map((productType)=>{
      return productType.items.map((item)=>{
       
       return(

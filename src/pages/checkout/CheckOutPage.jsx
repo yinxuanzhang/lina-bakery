@@ -1,9 +1,19 @@
 import { PagesBottom } from '../../componebts/PageSBottom';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart} from "react-icons/fa";
+import { useState,useEffect } from 'react';
+import axios from 'axios';
 import './checkoutpage.css';
 
 export function CheckOutPage() {
+  const [carts,setCarts]=useState([]);
+useEffect(()=>{
+ async function loadCarts(){
+  const response= await axios.get('http://localhost:3000/api/carts');
+  setCarts(response.data);
+ }
+ loadCarts();
+},[]);
   return (
     <>
       <div className="checkout-page">
@@ -29,30 +39,32 @@ export function CheckOutPage() {
 
           <div className="checkout-grid">
             <section className="cart-summary">
-              <div className="cart-item-container">
+             {carts.map((cartItem)=>{
+              return(
+                <div className="cart-item-container">
                 <div className="delivery-date">
-                  Delivery date:
-                  <span className="delivery-date-value"> Tuesday, April 7</span>
+                  Estimated completion date:
+                  <span className="delivery-date-value"> {cartItem.estimatedCompletionDate}</span>
                 </div>
 
                 <div className="cart-item-details-grid">
                   <img
                     className="product-image"
-                    src="/images/lina-slider1.png"
+                    src={cartItem.image}
                     alt="Cake product"
                   />
 
                   <div className="cart-item-details">
                     <div className="product-name">
-                      Intermediate Size Basketball
+                      {cartItem.code}
                     </div>
 
                     <div className="product-price">
-                      $20.95
+                      {cartItem.price}
                     </div>
 
                     <div className="product-quantity">
-                      Quantity: <span className="quantity-label">1</span>
+                      Quantity: <span className="quantity-label">{cartItem.quantity}</span>
 
                       <input
                         className="new-quantity-input"
@@ -66,156 +78,14 @@ export function CheckOutPage() {
                     </div>
                   </div>
 
-                  <div className="delivery-options">
-                    <div className="delivery-options-title">
-                      Choose a delivery option:
-                    </div>
-
-                    <label className="delivery-option">
-                      <input
-                        className="delivery-option-input"
-                        type="radio"
-                        name="delivery-option"
-                        defaultChecked
-                      />
-                      <div>
-                        <div className="delivery-option-date">
-                          Tuesday, April 7
-                        </div>
-                        <div className="delivery-option-price">
-                          FREE Shipping
-                        </div>
-                      </div>
-                    </label>
-
-                    <label className="delivery-option">
-                      <input
-                        className="delivery-option-input"
-                        type="radio"
-                        name="delivery-option"
-                      />
-                      <div>
-                        <div className="delivery-option-date">
-                          Wednesday, April 1
-                        </div>
-                        <div className="delivery-option-price">
-                          $4.99 - Shipping
-                        </div>
-                      </div>
-                    </label>
-
-                    <label className="delivery-option">
-                      <input
-                        className="delivery-option-input"
-                        type="radio"
-                        name="delivery-option"
-                      />
-                      <div>
-                        <div className="delivery-option-date">
-                          Monday, March 30
-                        </div>
-                        <div className="delivery-option-price">
-                          $9.99 - Shipping
-                        </div>
-                      </div>
-                    </label>
-                  </div>
+                 
                 </div>
                 
               </div>
-              <div className="cart-item-container">
-                <div className="delivery-date">
-                  Delivery date:
-                  <span className="delivery-date-value"> Tuesday, April 7</span>
-                </div>
-
-                <div className="cart-item-details-grid">
-                  <img
-                    className="product-image"
-                    src="/images/lina-slider1.png"
-                    alt="Cake product"
-                  />
-
-                  <div className="cart-item-details">
-                    <div className="product-name">
-                      Intermediate Size Basketball
-                    </div>
-
-                    <div className="product-price">
-                      $20.95
-                    </div>
-
-                    <div className="product-quantity">
-                      Quantity: <span className="quantity-label">1</span>
-
-                      <input
-                        className="new-quantity-input"
-                        type="number"
-                        defaultValue={1}
-                      />
-
-                      <span className="update-quantity-link">Update</span>
-                      <span className="save-quantity-link">Save</span>
-                      <span className="delete-quantity-link">Delete</span>
-                    </div>
-                  </div>
-
-                  <div className="delivery-options">
-                    <div className="delivery-options-title">
-                      Choose a delivery option:
-                    </div>
-
-                    <label className="delivery-option">
-                      <input
-                        className="delivery-option-input"
-                        type="radio"
-                        name="delivery-option"
-                        defaultChecked
-                      />
-                      <div>
-                        <div className="delivery-option-date">
-                          Tuesday, April 7
-                        </div>
-                        <div className="delivery-option-price">
-                          FREE Shipping
-                        </div>
-                      </div>
-                    </label>
-
-                    <label className="delivery-option">
-                      <input
-                        className="delivery-option-input"
-                        type="radio"
-                        name="delivery-option"
-                      />
-                      <div>
-                        <div className="delivery-option-date">
-                          Wednesday, April 1
-                        </div>
-                        <div className="delivery-option-price">
-                          $4.99 - Shipping
-                        </div>
-                      </div>
-                    </label>
-
-                    <label className="delivery-option">
-                      <input
-                        className="delivery-option-input"
-                        type="radio"
-                        name="delivery-option"
-                      />
-                      <div>
-                        <div className="delivery-option-date">
-                          Monday, March 30
-                        </div>
-                        <div className="delivery-option-price">
-                          $9.99 - Shipping
-                        </div>
-                      </div>
-                    </label>
-                  </div>
-                </div>
-              </div>
+              );
+             })}
+  
+  
             </section>
 
             <aside className="payment-summary">
