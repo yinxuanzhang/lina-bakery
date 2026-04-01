@@ -4,7 +4,7 @@ import { useState,useEffect } from 'react';
 import { TopHeader } from '../../componebts/TopHeader';
 import { PagesBottom } from '../../componebts/PageSBottom';
 
-export function HomePage(){
+export function HomePage({cartsTotalQuantities,loadCarts}){
   
   const[bannerIndex,setBannerIndex]=useState(0);
   const bannerPages=["/images/lina-slider1.png",
@@ -13,7 +13,7 @@ export function HomePage(){
     
   ]
   const [products,setProducts]=useState([]);
-
+  
   useEffect(()=>{
     const timer=setInterval(()=>{
       setBannerIndex((prev)=>prev===bannerPages.length-1 ? 0:prev+1);
@@ -25,18 +25,28 @@ export function HomePage(){
     loadProducts();
     return ()=>clearInterval(timer);
   },[]);
+  async function addToCart(item){
+    const request=await axios.post('http://localhost:3000/api/carts',{
+      "code":item.code,
+      "price":item.price,
+      "image":item.image,
+      "quantity":1,
+      "estimatedCompletionDate": "April 7"
+    });
+    return request.data;
+  }
   return(<>
   
   <div className="hero-section">
   <div className="hero-slider">
     {bannerPages.map((item,index)=>{
-          return(<>
+          return(
             <div className={`fade-slide ${bannerIndex === index ? 'active-slide' : ''}`} key={index}>
             <img src={item} alt=""/>
           </div>
-          </>)
+          )
     })}
-  <TopHeader/>
+  <TopHeader cartsTotalQuantities={cartsTotalQuantities}/>
   <div className="main-nav">
       <div className="lina-bakery-logo"><img src="/images/lina-logo.png" /></div>
       <ul className="ul-list">
@@ -68,7 +78,10 @@ export function HomePage(){
       <div className='each-product-info'>
         <div>{item.code}</div>
         <div>{item.price}</div>
-        <button>Add</button>
+        <button onClick={async()=>{
+          await addToCart(item);
+          await loadCarts();
+        }}>Add</button>
       </div>
       </div>
       </>);

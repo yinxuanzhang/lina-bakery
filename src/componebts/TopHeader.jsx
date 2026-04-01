@@ -2,7 +2,7 @@ import { FaSearch, FaUser, FaShoppingBag, FaRegCommentDots, FaGlobe } from "reac
 import { useState } from "react";
 import { Link } from 'react-router-dom';
 import './TopHeader.css'
-export function TopHeader(){
+export function TopHeader({cartsTotalQuantities}){
   const[openLanguageMenu,setOpenLanguageMenu]=useState(false);
   const[openSerachButton,setOpenSearchButton]=useState(false);
   return(
@@ -32,7 +32,7 @@ export function TopHeader(){
     
     <div className='go-to-order-page'>
       <Link to="/checkout">
-      <button><FaShoppingBag /></button>
+      <button><FaShoppingBag /><div className="cart-quantity">{cartsTotalQuantities}</div></button>
       </Link>
     </div>
     

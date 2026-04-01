@@ -1,19 +1,11 @@
 import { PagesBottom } from '../../componebts/PageSBottom';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart} from "react-icons/fa";
-import { useState,useEffect } from 'react';
-import axios from 'axios';
+
 import './checkoutpage.css';
 
-export function CheckOutPage() {
-  const [carts,setCarts]=useState([]);
-useEffect(()=>{
- async function loadCarts(){
-  const response= await axios.get('http://localhost:3000/api/carts');
-  setCarts(response.data);
- }
- loadCarts();
-},[]);
+export function CheckOutPage({carts,cartsTotalQuantities}) {
+   
   return (
     <>
       <div className="checkout-page">
@@ -25,7 +17,7 @@ useEffect(()=>{
           </div>
 
           <div className="checkout-header-title">
-            Checkout (3 items)
+            Checkout ({cartsTotalQuantities} Items) 
           </div>
 
           <div className="checkout-header-icon">
@@ -84,8 +76,6 @@ useEffect(()=>{
               </div>
               );
              })}
-  
-  
             </section>
 
             <aside className="payment-summary">

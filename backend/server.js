@@ -1,5 +1,14 @@
-export const ProductGrid = [
+import express from 'express';
+import cors from 'cors';
 
+const app=express();
+const port=3000;
+
+app.use(cors());
+app.use(express.json());
+
+const products= [
+ 
 {
   title: 'Jellycat 系列',
   items: [
@@ -410,3 +419,48 @@ export const ProductGrid = [
   ]
 }
 ];
+let carts=[
+  
+    {
+      code: 'J-01',
+      price: '$60',
+      image: '/images/resources/cellImage_0_17.jpg',
+      quantity: 1,
+      estimatedCompletionDate:'April 7'
+    },
+    {
+      code: 'J-02',
+      price: '$70',
+      image: '/images/resources/cellImage_0_25.jpg',
+      quantity: 1,
+      estimatedCompletionDate:'April 7'
+    }
+  
+];
+app.get('/api/products',(req,res)=>{
+  res.json(products);
+});
+app.get('/api/carts',(req,res)=>{
+  res.json(carts)
+})
+app.post('/api/carts',(req,res)=>{
+  const{code,price,image,quantity,estimatedCompletionDate}=req.body;
+  const existingItem=carts.find((item)=>item.code===code);
+  if(existingItem){
+    existingItem.quantity+=quantity;
+    return res.json(existingItem)
+  }
+  const newCartItem=
+    {
+      code,
+      price,
+      image,
+      quantity,
+      estimatedCompletionDate
+  };
+ carts.push(newCartItem);
+  res.status(201).json(newCartItem);
+})
+app.listen(port,()=>{
+  console.log(`server is running on port ${port} `)
+});
