@@ -1,11 +1,29 @@
 import { PagesBottom } from '../../componebts/PageSBottom';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart} from "react-icons/fa";
-
+import axios from 'axios';
 import './checkoutpage.css';
+import { useEffect } from 'react';
 
-export function CheckOutPage({carts,cartsTotalQuantities}) {
+
+export function CheckOutPage({carts,cartsTotalQuantities,loadCarts}) {
+   useEffect(()=>{
+    loadCarts();
+   },[loadCarts]);
+   async function deleteCartItem(code){
+     await axios.delete(`http://localhost:3000/api/carts/${code}`);
+     await loadCarts();
+   }
+   async function minusOneToCart(cartItem){
+    await axios.put(`http://localhost:3000/api/carts/${cartItem.code}`,{quantity:cartItem.quantity-=1});
+    await loadCarts();
+   }
    
+   async function addOneToCart(cartItem){
+    await axios.put(`http://localhost:3000/api/carts/${cartItem.code}`,{quantity:cartItem.quantity+=1});
+    await loadCarts();
+   }
+  
   return (
     <>
       <div className="checkout-page">
@@ -56,17 +74,17 @@ export function CheckOutPage({carts,cartsTotalQuantities}) {
                     </div>
 
                     <div className="product-quantity">
-                      Quantity: <span className="quantity-label">{cartItem.quantity}</span>
-
-                      <input
-                        className="new-quantity-input"
-                        type="number"
-                        defaultValue={1}
-                      />
-
-                      <span className="update-quantity-link">Update</span>
-                      <span className="save-quantity-link">Save</span>
-                      <span className="delete-quantity-link">Delete</span>
+                      Quantity:<span className="quantity-label"> {cartItem.quantity}</span>
+                      
+                      <span className="update-quantity-link" onClick={ async ()=>{
+                        await addOneToCart(cartItem);
+                      }}> Add</span>
+                      <span className="save-quantity-link" onClick={ async ()=>{
+                        await minusOneToCart(cartItem);
+                      }}>Down</span>
+                      <span className="delete-quantity-link" onClick={async ()=>{
+                       await deleteCartItem(cartItem.code);
+                      }}>Delete</span>
                     </div>
                   </div>
 

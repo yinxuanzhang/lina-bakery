@@ -118,20 +118,9 @@
   color: #333;
 }
 
-.new-quantity-input {
-  width: 70px;
-  margin-left: 12px;
-  margin-right: 12px;
-  padding: 6px 8px;
-  font-size: 16px;
-  border: 1px solid #d8c5bc;
-  border-radius: 6px;
-  outline: none;
-}
 
-.new-quantity-input:focus {
-  border-color: orangered;
-}
+
+
 
 .update-quantity-link,
 .save-quantity-link,
@@ -148,41 +137,7 @@
   opacity: 0.8;
 }
 
-.delivery-options {
-  border-left: 1px solid #f0dfd7;
-  padding-left: 20px;
-}
 
-.delivery-options-title {
-  font-size: 18px;
-  font-weight: 500;
-  margin-bottom: 16px;
-  color: #333;
-}
-
-.delivery-option {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 16px;
-  cursor: pointer;
-}
-
-.delivery-option-input {
-  margin-top: 4px;
-}
-
-.delivery-option-date {
-  font-size: 17px;
-  font-weight: 500;
-  color: orangered;
-  margin-bottom: 4px;
-}
-
-.delivery-option-price {
-  font-size: 15px;
-  color: #666;
-}
 
 .payment-summary {
   border: 1px solid #f0dfd7;

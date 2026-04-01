@@ -461,6 +461,24 @@ app.post('/api/carts',(req,res)=>{
  carts.push(newCartItem);
   res.status(201).json(newCartItem);
 })
+app.delete('/api/carts/:code',(req,res)=>{
+ const cartItemCode=req.params.code
+  carts=carts.filter((cartItem)=>cartItem.code!==cartItemCode);
+  res.json(carts);
+});
+app.put('/api/carts/:code',(req,res)=>{
+  const cartItemCode=req.params.code;
+  const{quantity}=req.body;
+  const cartsItem=carts.find((item)=>item.code===cartItemCode);
+  if(quantity<=0){
+    carts=carts.filter((item)=>item.code!==cartItemCode);
+   return res.json(carts);
+  }
+  else{
+    cartsItem.quantity=quantity;
+    return res.json(carts);
+  }
+})
 app.listen(port,()=>{
   console.log(`server is running on port ${port} `)
 });

@@ -81,6 +81,7 @@ export function HomePage({cartsTotalQuantities,loadCarts}){
         <button onClick={async()=>{
           await addToCart(item);
           await loadCarts();
+         
         }}>Add</button>
       </div>
       </div>

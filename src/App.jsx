@@ -11,9 +11,11 @@ function App() {
     const response= await axios.get('http://localhost:3000/api/carts');
     setCarts(response.data);
    }
-  useEffect(()=>{
-   loadCarts()
-  },[]);
+  
+  useEffect(() => {
+    loadCarts();
+  }, []);
+ 
    
    function conutCartQuantity(){
     if(!carts) return 0;
@@ -28,8 +30,8 @@ function App() {
   return (
     <>
       <Routes>
-      <Route index element={<HomePage cartsTotalQuantities={cartsTotalQuantities} loadCarts={loadCarts}/>}/>
-      <Route path="checkout" element={<CheckOutPage carts={carts} cartsTotalQuantities={cartsTotalQuantities} />}/>
+      <Route index element={<HomePage cartsTotalQuantities={cartsTotalQuantities} loadCarts={loadCarts} conutCartQuantity={conutCartQuantity}/>}/>
+      <Route path="checkout" element={<CheckOutPage carts={carts} cartsTotalQuantities={cartsTotalQuantities} loadCarts={loadCarts}/>}/>
       <Route path="order" element={<OrderPage />}/>
       <Route path="user" element={<UserPage />}/>
       </Routes>
