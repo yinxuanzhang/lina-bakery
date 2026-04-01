@@ -16,19 +16,19 @@ const products= [
       id: 17,
       code: 'J-01',
       price: '$60',
-      image: '/images/resources/cellImage_0_17.jpg'
+      image: '/images/resources/cellImage_0_17.png'
     },
     {
       id: 18,
       code: 'J-02',
       price: '$70',
-      image: '/images/resources/cellImage_0_25.jpg'
+      image: '/images/resources/cellImage_0_25.png'
     },
     {
       id: 19,
       code: 'J-03',
       price: '$60',
-      image: '/images/resources/cellImage_0_33.jpg'
+      image: '/images/resources/cellImage_0_33.png'
     },
     {
       id: 20,
