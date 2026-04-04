@@ -3,8 +3,10 @@ import axios from 'axios';
 import { useState,useEffect } from 'react';
 import { TopHeader } from '../../componebts/TopHeader';
 import { PagesBottom } from '../../componebts/PageSBottom';
-
-export function HomePage({cartsTotalQuantities,loadCarts}){
+import dayjs from 'dayjs';
+import { centsTobuck } from '../../../utils/money';
+import { Link } from 'react-router-dom';
+export function HomePage({cartsTotalQuantities,loadCarts,loadPaymentSummary}){
   
   const[bannerIndex,setBannerIndex]=useState(0);
   const bannerPages=["/images/lina-slider1.png",
@@ -31,7 +33,7 @@ export function HomePage({cartsTotalQuantities,loadCarts}){
       "price":item.price,
       "image":item.image,
       "quantity":1,
-      "estimatedCompletionDate": "April 7"
+      "estimatedCompletionDate": dayjs().add(3,'day').format('MMMM D')
     });
     return request.data;
   }
@@ -50,9 +52,9 @@ export function HomePage({cartsTotalQuantities,loadCarts}){
   <div className="main-nav">
       <div className="lina-bakery-logo"><img src="/images/lina-logo.png" /></div>
       <ul className="ul-list">
-        <li><a href="/">Home</a></li>
-        <li><a href="/delivery-page">Delivery Information</a></li>
-        <li><a href="/about-page">About Lina</a></li>
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/delivery-page">Delivery Information</Link></li>
+        <li><Link to="/about-lina">About Lina</Link></li>
       </ul>
   </div>
   </div>
@@ -77,11 +79,11 @@ export function HomePage({cartsTotalQuantities,loadCarts}){
       <img src={item.image} alt="" />
       <div className='each-product-info'>
         <div>{item.code}</div>
-        <div>{item.price}</div>
+        <div>${centsTobuck(item.price)}</div>
         <button onClick={async()=>{
           await addToCart(item);
           await loadCarts();
-         
+          await loadPaymentSummary();
         }}>Add</button>
       </div>
       </div>

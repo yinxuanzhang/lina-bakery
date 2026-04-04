@@ -3,27 +3,35 @@ import { Link } from 'react-router-dom';
 import { FaShoppingCart} from "react-icons/fa";
 import axios from 'axios';
 import './checkoutpage.css';
-import { useEffect } from 'react';
+import { useEffect} from 'react';
+import { centsTobuck } from '../../../utils/money';
 
 
-export function CheckOutPage({carts,cartsTotalQuantities,loadCarts}) {
-   useEffect(()=>{
-    loadCarts();
-   },[loadCarts]);
+export function CheckOutPage({carts,cartsTotalQuantities,loadCarts,orderPaymentSummary,loadPaymentSummary}) {
+  
+  
    async function deleteCartItem(code){
      await axios.delete(`http://localhost:3000/api/carts/${code}`);
      await loadCarts();
+     await loadPaymentSummary();
    }
    async function minusOneToCart(cartItem){
     await axios.put(`http://localhost:3000/api/carts/${cartItem.code}`,{quantity:cartItem.quantity-=1});
     await loadCarts();
+    await loadPaymentSummary();
    }
    
    async function addOneToCart(cartItem){
     await axios.put(`http://localhost:3000/api/carts/${cartItem.code}`,{quantity:cartItem.quantity+=1});
     await loadCarts();
+    await loadPaymentSummary();
    }
-  
+   
+  useEffect(()=>{
+    loadCarts();
+    loadPaymentSummary();
+   },[carts]);
+   
   return (
     <>
       <div className="checkout-page">
@@ -70,7 +78,7 @@ export function CheckOutPage({carts,cartsTotalQuantities,loadCarts}) {
                     </div>
 
                     <div className="product-price">
-                      {cartItem.price}
+                      ${centsTobuck(cartItem.price)}
                     </div>
 
                     <div className="product-quantity">
@@ -102,8 +110,9 @@ export function CheckOutPage({carts,cartsTotalQuantities,loadCarts}) {
               </div>
 
               <div className="payment-summary-row">
-                <div>Items (4):</div>
-                <div className="payment-summary-money">$68.60</div>
+                <div>Items ({cartsTotalQuantities}):</div>
+               
+                <div className="payment-summary-money">${centsTobuck(orderPaymentSummary.priceBeforeTax)||0}</div>
               </div>
 
               <div className="payment-summary-row">
@@ -113,25 +122,26 @@ export function CheckOutPage({carts,cartsTotalQuantities,loadCarts}) {
 
               <div className="payment-summary-row">
                 <div>Total before tax:</div>
-                <div className="payment-summary-money">$68.60</div>
+                <div className="payment-summary-money">${centsTobuck(orderPaymentSummary.priceBeforeTax)||0}</div>
               </div>
 
               <div className="payment-summary-row">
                 <div>Estimated tax (10%):</div>
-                <div className="payment-summary-money">$6.86</div>
+                <div className="payment-summary-money">${centsTobuck(orderPaymentSummary.estimatedTax)||0}</div>
               </div>
 
               <div className="payment-summary-row total-row">
                 <div>Order total:</div>
-                <div className="payment-summary-money">$75.46</div>
+                <div className="payment-summary-money">${centsTobuck(orderPaymentSummary.totalPrice)||0}</div>
               </div>
 
               <div className="payment-buttons-container">
                 <div className="paypal-button-container"></div>
-
+              <Link to="/order">
                 <button className="place-order-button button-primary">
-                  Place your order
+                  confirm your order
                 </button>
+              </Link>
               </div>
             </aside>
           </div>
