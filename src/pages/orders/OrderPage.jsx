@@ -1,24 +1,33 @@
 import { Link } from 'react-router-dom';
 import { FaShoppingBag } from "react-icons/fa";
 import { PagesBottom } from '../../componebts/PageSBottom';
+import dayjs from 'dayjs';
 import './orderpage.css';
+import { useState,useEffect } from 'react';
+import { centsTobuck } from '../../../utils/money';
+import axios from 'axios';
 
-export function OrderPage() {
-  const currentStep = 3;
-  // 0 = Order Accepted
-  // 1 = In Production
-  // 2 = Production Complete
-  // 3 = Out for Delivery
-  // 4 = Delivered
 
-  const orderSteps = [
-    'Order Accepted',
-    'In Production',
-    'Production Complete',
-    'Out for Delivery',
-    'Delivered'
-  ];
 
+export function OrderPage({carts,orderPaymentSummary,loadCarts,loadPaymentSummary}) {
+  async  function makeAnOrder(customerName,pickupDate,phoneNumber,emailAddress,carts){
+    await axios.post('http://localhost:3000/api/orders',{
+      customerName,
+      pickupDate,
+      phoneNumber,
+      emailAddress,
+      carts
+    })
+  }
+   useEffect(()=>{
+      loadCarts();
+      loadPaymentSummary();
+     },[carts]);
+  const minDate=dayjs().add(5,'day').format('YYYY-MM-DD');
+  const[pickupDate,setPickupDate]=useState('');
+  const[customerName,setCustomerName]=useState('');
+  const[phoneNumber,setPhoneNumber]=useState('');
+   const[emailAddress,setEmailAddress]=useState('');
   return (
     <>
       <div className="order-page">
@@ -39,119 +48,88 @@ export function OrderPage() {
         </header>
 
         <main className="order-main">
-          <h1 className="order-page-title">Order Status</h1>
+          <h1 className="order-page-title">Order</h1>
 
           <div className="order-layout">
             <section className="order-details-card">
               <div className="order-card-header">
                 <div>
-                  <div className="order-number-label">Order Number</div>
-                  <div className="order-number">#LB-2026-0317</div>
+                  <div className="order-number-label">Order Details</div>
+                  <div className="order-number">{}</div>
                 </div>
 
                 <div className="order-status-badge">
-                  Out for Delivery
+                  Only Pickup 
                 </div>
               </div>
 
               <div className="order-info-grid">
                 <div className="order-info-item">
                   <div className="order-info-label">Customer</div>
-                  <div className="order-info-value">Travis Zhang</div>
+                  <input className="order-info-value" type='text' value={customerName} onChange={(e)=>setCustomerName(e.target.value)}/>
                 </div>
 
                 <div className="order-info-item">
-                  <div className="order-info-label">Order Date</div>
-                  <div className="order-info-value">March 27, 2026</div>
+                  <div className="order-info-label">Pickup Date</div>
+                  <input className="order-info-value" type='date' value={pickupDate} min={minDate}
+                  onChange={(e)=>setPickupDate(e.target.value)}/>
                 </div>
 
                 <div className="order-info-item">
-                  <div className="order-info-label">Delivery Time</div>
-                  <div className="order-info-value">2:00 PM - 4:00 PM</div>
+                  <div className="order-info-label">Mobile Phone</div>
+                  <input className="order-info-value"  value={phoneNumber} onChange={(e)=>setPhoneNumber(e.target.value)} />
                 </div>
 
                 <div className="order-info-item">
-                  <div className="order-info-label">Delivery Address</div>
-                  <div className="order-info-value">Burnaby, BC</div>
+                  <div className="order-info-label">Email Address</div>
+                  <input className="order-info-value" type='text' value={emailAddress} onChange={(e)=>setEmailAddress(e.target.value)}/>
                 </div>
               </div>
 
               <div className="ordered-items-section">
                 <div className="section-title">Ordered Items</div>
-
-                <div className="ordered-item">
-                  <img
-                    className="ordered-item-image"
-                    src="/images/lina-slider2.png"
-                    alt="Cake"
-                  />
-
-                  <div className="ordered-item-content">
-                    <div className="ordered-item-name">
-                      Custom Birthday Cake
-                    </div>
-                    <div className="ordered-item-meta">
-                      Size: 6 inch
-                    </div>
-                    <div className="ordered-item-meta">
+                <div className="ordered-item-content">
+                    {carts.map((cartItem)=>{
+                      return(
+                    <>
+                     <div className="ordered-item">
+                      <img
+                      className="ordered-item-image"
+                      src={cartItem.image}
+                      alt="Cake"
+                      />
+                      <div className="ordered-item-name">
+                        {cartItem.code}
+                      </div>
+                      <div className="ordered-item-meta">
+                        ${centsTobuck(cartItem.price)}
+                      </div>
+                      <div className="ordered-item-meta">
                       Flavor: Strawberry Cream
-                    </div>
+                      </div>
                     <div className="ordered-item-meta">
-                      Quantity: 1
+                      Quantity: {cartItem.quantity}
                     </div>
-                  </div>
-
-                  <div className="ordered-item-price">
-                    $68.60
-                  </div>
+                    </div>
+                    </>);
+                    })}
+                     <div className="ordered-item-price">
+                      ${centsTobuck(orderPaymentSummary.priceBeforeTax)}
+                    </div>
                 </div>
               </div>
             </section>
 
             <aside className="order-summary-card">
-              <div className="section-title">Tracking Progress</div>
+              
 
-              <div className="progress-line-wrapper">
-                <div className="progress-line"></div>
-                <div
-                  className="progress-line-active"
-                  style={{ width: `${(currentStep / (orderSteps.length - 1)) * 100}%` }}
-                ></div>
-
-                <div className="progress-steps">
-                  {orderSteps.map((step, index) => {
-                    const isCompleted = index <= currentStep;
-                    const isCurrent = index === currentStep;
-
-                    return (
-                      <div className="progress-step" key={step}>
-                        <div
-                          className={`progress-dot ${isCompleted ? 'completed' : ''} ${isCurrent ? 'current' : ''}`}
-                        >
-                          {index + 1}
-                        </div>
-
-                        <div className={`progress-text ${isCompleted ? 'active' : ''}`}>
-                          {step}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-
-              <div className="status-note-box">
-                <div className="status-note-title">Latest Update</div>
-                <div className="status-note-text">
-                  Your order has left the bakery and is currently on the way.
-                </div>
-              </div>
+            
 
               <div className="summary-divider"></div>
 
               <div className="order-summary-row">
                 <div>Subtotal</div>
-                <div>$68.60</div>
+                <div>${centsTobuck(orderPaymentSummary.priceBeforeTax)}</div>
               </div>
 
               <div className="order-summary-row">
@@ -161,17 +139,19 @@ export function OrderPage() {
 
               <div className="order-summary-row">
                 <div>Tax</div>
-                <div>$6.86</div>
+                <div>${centsTobuck(orderPaymentSummary.estimatedTax)}</div>
               </div>
 
               <div className="order-summary-row total">
                 <div>Total</div>
-                <div>$75.46</div>
+                <div>${centsTobuck(orderPaymentSummary.totalPrice)}</div>
               </div>
 
               <div className="order-button-group">
-                <button className="order-primary-button">
-                  Contact Support
+                <button className="order-primary-button" onClick={async()=>{
+                 await makeAnOrder(customerName,pickupDate,phoneNumber,emailAddress,carts);
+                }}>
+                  Check Out
                 </button>
 
                 <Link to="/" className="back-home-link">

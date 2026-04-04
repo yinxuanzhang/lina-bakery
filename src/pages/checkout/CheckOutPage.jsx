@@ -27,7 +27,9 @@ export function CheckOutPage({carts,cartsTotalQuantities,loadCarts,orderPaymentS
     await loadPaymentSummary();
    }
    
-  useEffect(()=>{
+  
+  
+   useEffect(()=>{
     loadCarts();
     loadPaymentSummary();
    },[carts]);
@@ -61,7 +63,7 @@ export function CheckOutPage({carts,cartsTotalQuantities,loadCarts,orderPaymentS
               return(
                 <div className="cart-item-container">
                 <div className="delivery-date">
-                  Estimated completion date:
+                  Fastest completion date:
                   <span className="delivery-date-value"> {cartItem.estimatedCompletionDate}</span>
                 </div>
 

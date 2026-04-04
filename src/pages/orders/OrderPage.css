@@ -125,9 +125,10 @@
 }
 
 .order-info-value {
-  font-size: 18px;
+  font-size: 20px;
   color: #333;
   line-height: 1.4;
+  border: none;
 }
 
 .ordered-items-section {

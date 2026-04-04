@@ -33,7 +33,7 @@ export function HomePage({cartsTotalQuantities,loadCarts,loadPaymentSummary}){
       "price":item.price,
       "image":item.image,
       "quantity":1,
-      "estimatedCompletionDate": dayjs().add(3,'day').format('MMMM D')
+      "estimatedCompletionDate": dayjs().add(5,'day').format('MMMM D')
     });
     return request.data;
   }
@@ -73,7 +73,7 @@ export function HomePage({cartsTotalQuantities,loadCarts,loadPaymentSummary}){
      return productType.items.map((item)=>{
       
       return(
-      <>
+      
       
       <div className="product" key={item.id}>
       <img src={item.image} alt="" />
@@ -87,7 +87,7 @@ export function HomePage({cartsTotalQuantities,loadCarts,loadPaymentSummary}){
         }}>Add</button>
       </div>
       </div>
-      </>);
+      );
       });
     })}
   </div>

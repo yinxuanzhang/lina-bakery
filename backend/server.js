@@ -438,6 +438,7 @@ let carts=[
     }
   
 ];
+let orders=[];
 app.get('/api/products',(req,res)=>{
   res.json(products);
 });
@@ -475,6 +476,19 @@ app.post('/api/carts',(req,res)=>{
  carts.push(newCartItem);
   res.status(201).json(newCartItem);
 })
+
+app.post('/api/orders',(req,res)=>{
+  const {customerName,pickupDate,phoneNumber,emailAddress,carts}=req.body;
+  const newOrder={
+    customerName,
+    pickupDate,
+    phoneNumber,
+    emailAddress,
+    carts
+  }
+  orders.push(newOrder);
+  res.status(201).json(newOrder);
+})
 app.delete('/api/carts/:code',(req,res)=>{
  const cartItemCode=req.params.code
   carts=carts.filter((cartItem)=>cartItem.code!==cartItemCode);
@@ -492,7 +506,8 @@ app.put('/api/carts/:code',(req,res)=>{
     cartsItem.quantity=quantity;
     return res.json(carts);
   }
-})
+});
+
 app.listen(port,()=>{
   console.log(`server is running on port ${port} `)
 });

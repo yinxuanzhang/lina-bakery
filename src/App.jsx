@@ -40,7 +40,7 @@ function App() {
       <Routes>
       <Route index element={<HomePage cartsTotalQuantities={cartsTotalQuantities} loadCarts={loadCarts} conutCartQuantity={conutCartQuantity} loadPaymentSummary={loadPaymentSummary}/>}/>
       <Route path="checkout" element={<CheckOutPage carts={carts} cartsTotalQuantities={cartsTotalQuantities} loadCarts={loadCarts} orderPaymentSummary={orderPaymentSummary} loadPaymentSummary={loadPaymentSummary}/>}/>
-      <Route path="order" element={<OrderPage />}/>
+      <Route path="order" element={<OrderPage carts={carts} orderPaymentSummary={orderPaymentSummary} loadCarts={loadCarts} loadPaymentSummary={loadPaymentSummary}/>}/>
       <Route path="user" element={<UserPage />}/>
       <Route path="delivery-page" element={<DeliveryPage/>}/>
       <Route path="about-lina" element={<AboutLina/>}/>
