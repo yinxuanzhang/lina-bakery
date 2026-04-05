@@ -1,17 +1,20 @@
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { FaShoppingBag } from "react-icons/fa";
 import { PagesBottom } from '../../componebts/PageSBottom';
 import dayjs from 'dayjs';
 import './orderpage.css';
 import { useState,useEffect } from 'react';
 import { centsTobuck } from '../../../utils/money';
+import{v4 as uuidv4} from 'uuid';
 import axios from 'axios';
 
 
 
 export function OrderPage({carts,orderPaymentSummary,loadCarts,loadPaymentSummary}) {
+  const navigate=useNavigate();
   async  function makeAnOrder(customerName,pickupDate,phoneNumber,emailAddress,carts){
     await axios.post('http://localhost:3000/api/orders',{
+      orderNumber:uuidv4(),
       customerName,
       pickupDate,
       phoneNumber,
@@ -28,6 +31,19 @@ export function OrderPage({carts,orderPaymentSummary,loadCarts,loadPaymentSummar
   const[customerName,setCustomerName]=useState('');
   const[phoneNumber,setPhoneNumber]=useState('');
    const[emailAddress,setEmailAddress]=useState('');
+   async function checkOutConfirm(){
+    if (customerName.trim()!==''&&pickupDate.trim()!==''&&phoneNumber.trim()!==''&&emailAddress.trim()!==''){
+      try {
+        await makeAnOrder(customerName,pickupDate,phoneNumber,emailAddress,carts);
+        navigate('/order-confirmation',{state:{pickupDate}});
+      } catch(error){
+        alert("Order failed.Please try again")
+      }
+      
+    }else{
+      alert("Please complete all required information.");
+    }
+   }
   return (
     <>
       <div className="order-page">
@@ -91,8 +107,8 @@ export function OrderPage({carts,orderPaymentSummary,loadCarts,loadPaymentSummar
                 <div className="ordered-item-content">
                     {carts.map((cartItem)=>{
                       return(
-                    <>
-                     <div className="ordered-item">
+                    
+                     <div className="ordered-item" key={cartItem.id}>
                       <img
                       className="ordered-item-image"
                       src={cartItem.image}
@@ -111,7 +127,7 @@ export function OrderPage({carts,orderPaymentSummary,loadCarts,loadPaymentSummar
                       Quantity: {cartItem.quantity}
                     </div>
                     </div>
-                    </>);
+                    );
                     })}
                      <div className="ordered-item-price">
                       ${centsTobuck(orderPaymentSummary.priceBeforeTax)}
@@ -148,12 +164,13 @@ export function OrderPage({carts,orderPaymentSummary,loadCarts,loadPaymentSummar
               </div>
 
               <div className="order-button-group">
-                <button className="order-primary-button" onClick={async()=>{
-                 await makeAnOrder(customerName,pickupDate,phoneNumber,emailAddress,carts);
+                
+                <button className="order-primary-button" onClick={()=>{
+                 checkOutConfirm()
                 }}>
                   Check Out
                 </button>
-
+              
                 <Link to="/" className="back-home-link">
                   <button className="order-secondary-button">
                     Back to Home

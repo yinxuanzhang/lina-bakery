@@ -3,6 +3,7 @@ import { CheckOutPage } from "./pages/checkout/CheckOutPage";
 import { OrderPage } from "./pages/orders/OrderPage";
 import { DeliveryPage } from "./pages/information/DeliveryPage";
 import { AboutLina } from "./pages/information/AboutLina";
+import{OrderConfirmationPage} from"./pages/orders/OrderConfirmationPage"
 import{UserPage} from "./pages/user/UserPage"
 import {Routes,Route} from 'react-router-dom';
 import { useState,useEffect } from "react";
@@ -44,6 +45,7 @@ function App() {
       <Route path="user" element={<UserPage />}/>
       <Route path="delivery-page" element={<DeliveryPage/>}/>
       <Route path="about-lina" element={<AboutLina/>}/>
+      <Route path="order-confirmation" element={<OrderConfirmationPage/>}/>
       </Routes>
     </>
   )

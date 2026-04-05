@@ -61,7 +61,7 @@ export function CheckOutPage({carts,cartsTotalQuantities,loadCarts,orderPaymentS
             <section className="cart-summary">
              {carts.map((cartItem)=>{
               return(
-                <div className="cart-item-container">
+                <div className="cart-item-container" key={cartItem.code}>
                 <div className="delivery-date">
                   Fastest completion date:
                   <span className="delivery-date-value"> {cartItem.estimatedCompletionDate}</span>

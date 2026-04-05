@@ -10,9 +10,7 @@ export function HomePage({cartsTotalQuantities,loadCarts,loadPaymentSummary}){
   
   const[bannerIndex,setBannerIndex]=useState(0);
   const bannerPages=["/images/lina-slider1.png",
-    "/images/lina-slider2.png",
-    "/images/lina-slider3.png",
-    
+    "/images/lina-slider2.png"
   ]
   const [products,setProducts]=useState([]);
   
@@ -75,7 +73,7 @@ export function HomePage({cartsTotalQuantities,loadCarts,loadPaymentSummary}){
       return(
       
       
-      <div className="product" key={item.id}>
+      <div className="product" key={item.code}>
       <img src={item.image} alt="" />
       <div className='each-product-info'>
         <div>{item.code}</div>

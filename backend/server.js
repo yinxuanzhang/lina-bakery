@@ -445,6 +445,9 @@ app.get('/api/products',(req,res)=>{
 app.get('/api/carts',(req,res)=>{
   res.json(carts)
 });
+app.get('/api/orders',(req,res)=>{
+  res.json(orders)
+})
 app.get('/api/carts/payment-summary',(req,res)=>{
   
   let priceBeforeTax=0;
@@ -478,8 +481,9 @@ app.post('/api/carts',(req,res)=>{
 })
 
 app.post('/api/orders',(req,res)=>{
-  const {customerName,pickupDate,phoneNumber,emailAddress,carts}=req.body;
+  const {customerName,pickupDate,phoneNumber,emailAddress,carts,orderNumber}=req.body;
   const newOrder={
+    orderNumber,
     customerName,
     pickupDate,
     phoneNumber,
