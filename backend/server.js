@@ -1,12 +1,43 @@
 import express from 'express';
 import cors from 'cors';
-import { GiPriceTag } from 'react-icons/gi';
+import Stripe from 'stripe';
+import dotenv from 'dotenv';
+
+
+dotenv.config();
+
 
 const app=express();
 const port=3000;
 
 app.use(cors());
+const stripe= new Stripe(process.env.STRIPE_SECRET_KEY);
+app.post('/api/stripe-webhook',
+  express.raw({type:'application/json'}),
+  (req,res)=>{
+    const sig=req.headers['stripe-signature'];
+    let event;
+    try{
+      event=stripe.webhooks.constructEvent(req.body,sig,process.env.STRIPE_WEBHOOK_SECRET);
+    }catch(error){
+      console.error('Webhook signature verification failed',error.message);
+      return res.sendStatus(400);
+    }
+    if (event.type === 'checkout.session.completed') {
+      const session = event.data.object;
+      console.log('payment success, session id:', session.id);
+
+      // 这里以后写：
+      // 1. 找到你的订单
+      // 2. 把订单状态改成 paid
+    }
+    res.sendStatus(200);
+
+  }
+);
+
 app.use(express.json());
+
 
 const products= [
  
@@ -511,6 +542,43 @@ app.put('/api/carts/:code',(req,res)=>{
     return res.json(carts);
   }
 });
+
+//stripe api
+app.post('/api/create-checkout-session',async(req,res)=>{
+  try{
+    const{carts,pickupDate}=req.body;
+    const line_items=carts.map((item)=>({
+      quantity:item.quantity,
+      price_data:{
+        currency:'cad',
+        product_data:{
+          name:item.code,
+        },
+        unit_amount:item.price,
+      },
+    }));
+    const session=await stripe.checkout.sessions.create({
+      mode:'payment',
+      line_items,
+      success_url: `${process.env.CLIENT_URL}/order-confirmation?pickupDate=${encodeURIComponent(pickupDate)}`,
+      {/*}billing_address_collection: 'required',
+      automatic_tax: {enabled: true}, 等到完工了再设置*/}
+       cancel_url: `${process.env.CLIENT_URL}/order`,
+    });
+    res.json({url:session.url});
+  }catch(error){
+    console.error('Stripe session error:', error);
+    res.status(500).json({ message: 'Failed to create checkout session' });
+  }
+});
+
+
+
+
+
+
+
+
 
 app.listen(port,()=>{
   console.log(`server is running on port ${port} `)

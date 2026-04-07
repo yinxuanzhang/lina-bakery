@@ -5,8 +5,9 @@ import './OrderConfirmationPage.css';
 
 export function OrderConfirmationPage() {
   const location = useLocation();
-
-  const pickupDate = location.state?.pickupDate || 'Not selected';
+  const query = new URLSearchParams(location.search);
+  const pickupDate = query.get('pickupDate');
+  
   const pickupAddress =
    "29-7288 188 Street Surrey BC. V4N 6W3";
 

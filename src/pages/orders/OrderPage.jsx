@@ -20,6 +20,7 @@ export function OrderPage({carts,orderPaymentSummary,loadCarts,loadPaymentSummar
       phoneNumber,
       emailAddress,
       carts
+      
     })
   }
    useEffect(()=>{
@@ -35,7 +36,11 @@ export function OrderPage({carts,orderPaymentSummary,loadCarts,loadPaymentSummar
     if (customerName.trim()!==''&&pickupDate.trim()!==''&&phoneNumber.trim()!==''&&emailAddress.trim()!==''){
       try {
         await makeAnOrder(customerName,pickupDate,phoneNumber,emailAddress,carts);
-        navigate('/order-confirmation',{state:{pickupDate}});
+        const response=await axios.post('http://localhost:3000/api/create-checkout-session',
+          {carts,pickupDate}
+        );
+         window.location.href=response.data.url;
+       
       } catch(error){
         alert("Order failed.Please try again")
       }
@@ -44,6 +49,7 @@ export function OrderPage({carts,orderPaymentSummary,loadCarts,loadPaymentSummar
       alert("Please complete all required information.");
     }
    }
+
   return (
     <>
       <div className="order-page">
