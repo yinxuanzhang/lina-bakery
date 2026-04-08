@@ -1,0 +1,117 @@
+.delivery-hero-section {
+  width: 100%;
+}
+
+.delivery-hero-banner {
+  width: 100%;
+  height: 75vh;
+  min-height: 520px;
+  position: relative;
+  overflow: hidden;
+}
+
+.delivery-hero-banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.88);
+}
+
+.delivery-page-title {
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 10;
+  color: white;
+}
+
+.delivery-page-title h1 {
+  margin: 0;
+  font-size: 58px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.delivery-content {
+  width: 70%;
+  margin: 90px auto 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+
+.delivery-card {
+  background-color: #fffaf5;
+  padding: 45px 50px;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  text-align: center;
+}
+
+.delivery-card h2 {
+  margin-bottom: 25px;
+  font-size: 34px;
+  color: orangered;
+  font-weight: 500;
+}
+
+.delivery-card p {
+  font-size: 20px;
+  line-height: 1.9;
+  color: #5c4033;
+  margin: 10px 0;
+}
+
+.delivery-contact-box {
+  text-align: center;
+  padding: 35px 20px;
+}
+
+.delivery-contact-box h3 {
+  font-size: 30px;
+  color: orangered;
+  margin-bottom: 14px;
+}
+
+.delivery-contact-box p {
+  font-size: 20px;
+  color: #5c4033;
+  margin: 8px 0;
+}
+
+.delivery-email {
+  font-size: 24px;
+  color: orangered;
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  .delivery-content {
+    width: 88%;
+    margin: 60px auto 90px;
+  }
+
+  .delivery-card {
+    padding: 30px 24px;
+  }
+
+  .delivery-page-title h1 {
+    font-size: 38px;
+  }
+
+  .delivery-card h2 {
+    font-size: 28px;
+  }
+
+  .delivery-card p,
+  .delivery-contact-box p {
+    font-size: 17px;
+  }
+
+  .delivery-email {
+    font-size: 20px;
+  }
+}

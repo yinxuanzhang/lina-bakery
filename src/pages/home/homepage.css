@@ -38,6 +38,9 @@
   flex-direction: column;
   align-items: center;
   z-index: 10;
+  width: 100%;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
 .lina-bakery-logo img {
@@ -49,11 +52,13 @@
 .ul-list {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 35px;
   margin: -20px 0 0;
   padding: 0;
   list-style: none;
   font-size: 20px;
+  flex-wrap: wrap;
 }
 
 .ul-list li {
@@ -70,7 +75,7 @@
   opacity: 0.8;
 }
 
-/* middle banner part */
+/* middle banner */
 
 .middle-section-banner {
   width: 70%;
@@ -100,15 +105,39 @@
   color: orangered;
 }
 
-/* main products part */
+/* products section */
+
+.products-section {
+  width: 100%;
+  margin: 70px auto 90px;
+}
+
+.product-series-section {
+  width: 75%;
+  margin: 0 auto 80px;
+}
+
+.series-header {
+  margin-bottom: 26px;
+  text-align: left;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f1e6df;
+}
+
+.series-title {
+  margin: 0;
+  font-size: 34px;
+  font-weight: 500;
+  color: orangered;
+  line-height: 1.3;
+}
 
 .products-Gride {
-  width: 75%;
-  margin: 90px auto;
+  width: 100%;
+  margin: 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 18px;
-  
 }
 
 .product {
@@ -118,18 +147,56 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  
 }
-.each-product-info{
-  display: flex;
-  gap: 10px;
-}
+
 .products-Gride .product img {
   width: 85%;
   height: 85%;
   object-fit: contain;
   display: block;
 }
+
+.each-product-info {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-align: center;
+  margin-top: 2px;
+}
+
+.product-code {
+  font-weight: 500;
+  color: #4d3b34;
+}
+
+.product-price {
+  color: orangered;
+  font-weight: 500;
+}
+
+.product-note {
+  width: 100%;
+  font-size: 14px;
+  color: #8a6d62;
+}
+
+.each-product-info button {
+  border: none;
+  background-color: orangered;
+  color: white;
+  padding: 8px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.each-product-info button:hover {
+  opacity: 0.9;
+}
+
+/* bottom banner */
 
 .new-discount-product {
   width: 100%;
@@ -144,3 +211,186 @@
   display: block;
 }
 
+/* tablet */
+
+@media (max-width: 1024px) {
+  .hero-slider {
+    min-height: 560px;
+  }
+
+  .lina-bakery-logo img {
+    width: 240px;
+  }
+
+  .ul-list {
+    gap: 24px;
+    font-size: 17px;
+    margin-top: -12px;
+  }
+
+  .middle-section-banner {
+    width: 85%;
+    gap: 20px;
+  }
+
+  .middle-section-banner p {
+    font-size: 24px;
+  }
+
+  .product-series-section {
+    width: 88%;
+    margin-bottom: 64px;
+  }
+
+  .series-title {
+    font-size: 28px;
+  }
+
+  .products-Gride {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+
+  .new-discount-product {
+    height: 500px;
+  }
+}
+
+/* mobile */
+
+@media (max-width: 768px) {
+  .hero-slider {
+    height: 68vh;
+    min-height: 420px;
+  }
+
+  .main-nav {
+    top: 10px;
+    padding: 0 14px;
+  }
+
+  .lina-bakery-logo img {
+    width: 180px;
+  }
+
+  .ul-list {
+    gap: 14px;
+    margin-top: -6px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .middle-section-banner {
+    width: 90%;
+    margin: 40px auto;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .middle-section-banner p {
+    font-size: 22px;
+    margin-top: 10px;
+  }
+
+  .products-section {
+    margin: 50px auto;
+  }
+
+  .product-series-section {
+    width: 90%;
+    margin-bottom: 48px;
+  }
+
+  .series-header {
+    margin-bottom: 18px;
+    padding-bottom: 8px;
+  }
+
+  .series-title {
+    font-size: 24px;
+  }
+
+  .products-Gride {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .product {
+    aspect-ratio: auto;
+  }
+
+  .products-Gride .product img {
+    width: 100%;
+    height: 230px;
+    object-fit: contain;
+  }
+
+  .each-product-info {
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .each-product-info button {
+    padding: 9px 20px;
+    font-size: 14px;
+  }
+
+  .new-discount-product {
+    height: 260px;
+  }
+}
+
+/* small mobile */
+
+@media (max-width: 480px) {
+  .hero-slider {
+    height: 60vh;
+    min-height: 360px;
+  }
+
+  .lina-bakery-logo img {
+    width: 145px;
+  }
+
+  .ul-list {
+    gap: 10px;
+    font-size: 12px;
+    margin-top: 0;
+  }
+
+  .middle-section-banner {
+    width: 92%;
+    margin: 30px auto;
+  }
+
+  .middle-section-banner p {
+    font-size: 18px;
+  }
+
+  .product-series-section {
+    width: 92%;
+    margin-bottom: 40px;
+  }
+
+  .series-title {
+    font-size: 20px;
+  }
+
+  .products-Gride {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .products-Gride .product img {
+    height: 260px;
+  }
+
+  .each-product-info {
+    font-size: 15px;
+  }
+
+  .new-discount-product {
+    height: 200px;
+  }
+}

@@ -1,54 +1,59 @@
-import { Link,useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FaShoppingBag } from "react-icons/fa";
 import { PagesBottom } from '../../componebts/PageSBottom';
 import dayjs from 'dayjs';
 import './orderpage.css';
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { centsTobuck } from '../../../utils/money';
-import{v4 as uuidv4} from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
-
-
-export function OrderPage({carts,orderPaymentSummary,loadCarts,loadPaymentSummary}) {
-  const navigate=useNavigate();
-  async  function makeAnOrder(customerName,pickupDate,phoneNumber,emailAddress,carts){
-    await axios.post('http://localhost:3000/api/orders',{
-      orderNumber:uuidv4(),
+export function OrderPage({ carts, orderPaymentSummary, loadCarts, loadPaymentSummary }) {
+  async function makeAnOrder(customerName, pickupDate, phoneNumber, emailAddress, carts) {
+    await axios.post('http://localhost:3000/api/orders', {
+      orderNumber: uuidv4(),
       customerName,
       pickupDate,
       phoneNumber,
       emailAddress,
       carts
-      
-    })
+    });
   }
-   useEffect(()=>{
-      loadCarts();
-      loadPaymentSummary();
-     },[carts]);
-  const minDate=dayjs().add(5,'day').format('YYYY-MM-DD');
-  const[pickupDate,setPickupDate]=useState('');
-  const[customerName,setCustomerName]=useState('');
-  const[phoneNumber,setPhoneNumber]=useState('');
-   const[emailAddress,setEmailAddress]=useState('');
-   async function checkOutConfirm(){
-    if (customerName.trim()!==''&&pickupDate.trim()!==''&&phoneNumber.trim()!==''&&emailAddress.trim()!==''){
+
+  useEffect(() => {
+    loadCarts();
+    loadPaymentSummary();
+  }, [carts]);
+
+  const minDate = dayjs().add(5, 'day').format('YYYY-MM-DD');
+  const [pickupDate, setPickupDate] = useState('');
+  const [customerName, setCustomerName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [emailAddress, setEmailAddress] = useState('');
+
+  async function checkOutConfirm() {
+    if (
+      customerName.trim() !== '' &&
+      pickupDate.trim() !== '' &&
+      phoneNumber.trim() !== '' &&
+      emailAddress.trim() !== ''
+    ) {
       try {
-        await makeAnOrder(customerName,pickupDate,phoneNumber,emailAddress,carts);
-        const response=await axios.post('http://localhost:3000/api/create-checkout-session',
-          {carts,pickupDate}
+        await makeAnOrder(customerName, pickupDate, phoneNumber, emailAddress, carts);
+
+        const response = await axios.post(
+          'http://localhost:3000/api/create-checkout-session',
+          { carts, pickupDate }
         );
-         window.location.href=response.data.url;
-       
-      } catch(error){
-        alert("Order failed.Please try again")
+
+        window.location.href = response.data.url;
+      } catch (error) {
+        alert("Order failed. Please try again.");
       }
-      
-    }else{
+    } else {
       alert("Please complete all required information.");
     }
-   }
+  }
 
   return (
     <>
@@ -70,88 +75,120 @@ export function OrderPage({carts,orderPaymentSummary,loadCarts,loadPaymentSummar
         </header>
 
         <main className="order-main">
-          <h1 className="order-page-title">Order</h1>
+          <h1 className="order-page-title">Order Details</h1>
 
           <div className="order-layout">
             <section className="order-details-card">
               <div className="order-card-header">
                 <div>
                   <div className="order-number-label">Order Details</div>
-                  <div className="order-number">{}</div>
+                  <div className="order-number">Custom Cake Order</div>
                 </div>
 
                 <div className="order-status-badge">
-                  Only Pickup 
+                  Pickup Only
                 </div>
               </div>
 
               <div className="order-info-grid">
                 <div className="order-info-item">
-                  <div className="order-info-label">Customer</div>
-                  <input className="order-info-value" type='text' value={customerName} onChange={(e)=>setCustomerName(e.target.value)}/>
+                  <label className="order-info-label">Customer Name</label>
+                  <input
+                    className="order-info-value"
+                    type="text"
+                    placeholder="Enter your name"
+                    value={customerName}
+                    onChange={(e) => setCustomerName(e.target.value)}
+                  />
                 </div>
 
                 <div className="order-info-item">
-                  <div className="order-info-label">Pickup Date</div>
-                  <input className="order-info-value" type='date' value={pickupDate} min={minDate}
-                  onChange={(e)=>setPickupDate(e.target.value)}/>
+                  <label className="order-info-label">Pickup Date</label>
+                  <input
+                    className="order-info-value"
+                    type="date"
+                    value={pickupDate}
+                    min={minDate}
+                    onChange={(e) => setPickupDate(e.target.value)}
+                  />
                 </div>
 
                 <div className="order-info-item">
-                  <div className="order-info-label">Mobile Phone</div>
-                  <input className="order-info-value"  value={phoneNumber} onChange={(e)=>setPhoneNumber(e.target.value)} />
+                  <label className="order-info-label">Mobile Phone</label>
+                  <input
+                    className="order-info-value"
+                    type="text"
+                    placeholder="Enter your phone number"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                  />
                 </div>
 
                 <div className="order-info-item">
-                  <div className="order-info-label">Email Address</div>
-                  <input className="order-info-value" type='text' value={emailAddress} onChange={(e)=>setEmailAddress(e.target.value)}/>
+                  <label className="order-info-label">Email Address</label>
+                  <input
+                    className="order-info-value"
+                    type="email"
+                    placeholder="Enter your email"
+                    value={emailAddress}
+                    onChange={(e) => setEmailAddress(e.target.value)}
+                  />
                 </div>
               </div>
 
               <div className="ordered-items-section">
                 <div className="section-title">Ordered Items</div>
-                <div className="ordered-item-content">
-                    {carts.map((cartItem)=>{
-                      return(
-                    
-                     <div className="ordered-item" key={cartItem.id}>
-                      <img
-                      className="ordered-item-image"
-                      src={cartItem.image}
-                      alt="Cake"
-                      />
-                      <div className="ordered-item-name">
-                        {cartItem.code}
+
+                <div className="ordered-items-list">
+                  {carts.map((cartItem) => {
+                    return (
+                      <div className="ordered-item" key={cartItem.code}>
+                        <img
+                          className="ordered-item-image"
+                          src={cartItem.image}
+                          alt={cartItem.code}
+                        />
+
+                        <div className="ordered-item-content">
+                          <div className="ordered-item-name">
+                            {cartItem.code}
+                          </div>
+
+                          <div className="ordered-item-meta">
+                            Price: ${centsTobuck(cartItem.price)}
+                          </div>
+
+                          <div className="ordered-item-meta">
+                            Flavor: Strawberry Cream
+                          </div>
+
+                          <div className="ordered-item-meta">
+                            Quantity: {cartItem.quantity}
+                          </div>
+                        </div>
+
+                        <div className="ordered-item-price">
+                          ${centsTobuck(cartItem.price * cartItem.quantity)}
+                        </div>
                       </div>
-                      <div className="ordered-item-meta">
-                        ${centsTobuck(cartItem.price)}
-                      </div>
-                      <div className="ordered-item-meta">
-                      Flavor: Strawberry Cream
-                      </div>
-                    <div className="ordered-item-meta">
-                      Quantity: {cartItem.quantity}
-                    </div>
-                    </div>
                     );
-                    })}
-                     <div className="ordered-item-price">
-                      ${centsTobuck(orderPaymentSummary.priceBeforeTax)}
-                    </div>
+                  })}
                 </div>
               </div>
             </section>
 
             <aside className="order-summary-card">
-              
+              <div className="summary-card-title">Order Summary</div>
 
-            
+              <div className="summary-note-box">
+                Please review your information carefully before proceeding to payment.
+              </div>
 
               <div className="summary-divider"></div>
 
               <div className="order-summary-row">
                 <div>Subtotal</div>
-                <div>${centsTobuck(orderPaymentSummary.priceBeforeTax)}</div>
+                <div>${centsTobuck(orderPaymentSummary.priceBeforeTax) || 0}</div>
               </div>
 
               <div className="order-summary-row">
@@ -161,22 +198,24 @@ export function OrderPage({carts,orderPaymentSummary,loadCarts,loadPaymentSummar
 
               <div className="order-summary-row">
                 <div>Tax</div>
-                <div>${centsTobuck(orderPaymentSummary.estimatedTax)}</div>
+                <div>${centsTobuck(orderPaymentSummary.estimatedTax) || 0}</div>
               </div>
 
               <div className="order-summary-row total">
                 <div>Total</div>
-                <div>${centsTobuck(orderPaymentSummary.totalPrice)}</div>
+                <div>${centsTobuck(orderPaymentSummary.totalPrice) || 0}</div>
               </div>
 
               <div className="order-button-group">
-                
-                <button className="order-primary-button" onClick={()=>{
-                 checkOutConfirm()
-                }}>
-                  Check Out
+                <button
+                  className="order-primary-button"
+                  onClick={() => {
+                    checkOutConfirm();
+                  }}
+                >
+                  Proceed to Checkout
                 </button>
-              
+
                 <Link to="/" className="back-home-link">
                   <button className="order-secondary-button">
                     Back to Home

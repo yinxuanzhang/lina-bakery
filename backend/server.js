@@ -120,7 +120,7 @@ const products= [
       code: 'D-03',
       price: 6000,
       image: '/images/resources/cellImage_0_34.jpg',
-      size:'图片可换'
+      
     },
     {
       id: 29,
@@ -151,7 +151,7 @@ const products= [
       code: 'D-08',
       price: 13000,
       image: '/images/resources/cellImage_0_67.jpg',
-      size:'玩偶可换'
+      
     },
     {
       id: 34,
@@ -317,7 +317,7 @@ const products= [
       code: 'Y-06',
       price: 10000,
       image: '/images/resources/cellImage_0_58.jpg',
-      size:'可吹哨'
+      
     },
     {
       id: 59,
@@ -561,8 +561,8 @@ app.post('/api/create-checkout-session',async(req,res)=>{
       mode:'payment',
       line_items,
       success_url: `${process.env.CLIENT_URL}/order-confirmation?pickupDate=${encodeURIComponent(pickupDate)}`,
-      {/*}billing_address_collection: 'required',
-      automatic_tax: {enabled: true}, 等到完工了再设置*/}
+      /*}billing_address_collection: 'required',
+      automatic_tax: {enabled: true}, 等到完工了再设置*/
        cancel_url: `${process.env.CLIENT_URL}/order`,
     });
     res.json({url:session.url});

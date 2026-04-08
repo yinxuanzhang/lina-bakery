@@ -5,10 +5,12 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 28px;
+  gap: 22px;
   font-size: 22px;
   color: orangered;
-  z-index: 10;
+  z-index: 20;
+  max-width: calc(100% - 80px);
+  flex-wrap: wrap;
 }
 
 .top-header button {
@@ -27,6 +29,7 @@
 
 .top-header-cad p {
   margin: 0;
+  font-size: 18px;
 }
 
 .language-dropdown-wrapper {
@@ -41,7 +44,8 @@
   padding: 8px 0;
   min-width: 110px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  z-index: 20;
+  z-index: 30;
+  border-radius: 8px;
 }
 
 .language-option {
@@ -71,7 +75,7 @@
   border-bottom: 1px solid #e14b3b;
   outline: none;
   padding: 4px 0;
-  font-size: 18px;
+  font-size: 16px;
   color: #e14b3b;
   background: transparent;
 }
@@ -88,7 +92,132 @@
   align-items: center;
   justify-content: center;
 }
-.cart-quantity{
-  margin-bottom: 17px;
-  
+
+.cart-button {
+  position: relative;
+}
+
+.cart-quantity {
+  position: absolute;
+  top: -10px;
+  right: -12px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background-color: orangered;
+  color: white;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+/* tablet */
+
+@media (max-width: 1024px) {
+  .top-header {
+    top: 18px;
+    right: 24px;
+    gap: 16px;
+    font-size: 18px;
+    max-width: calc(100% - 48px);
+  }
+
+  .top-header button {
+    font-size: 18px;
+  }
+
+  .top-header-cad p {
+    font-size: 16px;
+  }
+
+  .search-input-box {
+    width: 110px;
+    font-size: 14px;
+  }
+}
+
+/* mobile */
+
+@media (max-width: 768px) {
+  .top-header {
+    top: 12px;
+    right: 14px;
+    gap: 12px;
+    font-size: 16px;
+    max-width: calc(100% - 28px);
+  }
+
+  .top-header button {
+    font-size: 16px;
+  }
+
+  .top-header-cad p {
+    font-size: 14px;
+  }
+
+  .search-button-wrapper {
+    gap: 6px;
+  }
+
+  .search-input-box {
+    width: 90px;
+    font-size: 13px;
+  }
+
+  .language-dropdown {
+    min-width: 96px;
+  }
+
+  .language-option {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  .cart-quantity {
+    top: -8px;
+    right: -9px;
+    min-width: 16px;
+    height: 16px;
+    font-size: 10px;
+  }
+}
+
+/* small mobile */
+
+@media (max-width: 480px) {
+  .top-header {
+    top: 10px;
+    right: 10px;
+    gap: 10px;
+    font-size: 14px;
+    max-width: calc(100% - 20px);
+  }
+
+  .top-header button {
+    font-size: 14px;
+  }
+
+  .top-header-cad p {
+    font-size: 12px;
+  }
+
+  .search-input-box {
+    width: 72px;
+    font-size: 12px;
+  }
+
+  .language-option {
+    font-size: 13px;
+  }
+
+  .cart-quantity {
+    top: -7px;
+    right: -8px;
+    min-width: 15px;
+    height: 15px;
+    font-size: 9px;
+  }
 }
