@@ -3,10 +3,10 @@ import { useState } from "react";
 import { Link } from 'react-router-dom';
 import './TopHeader.css';
 
-export function TopHeader({ cartsTotalQuantities }) {
+export function TopHeader({ cartsTotalQuantities,searchText,setSearchText }) {
   const [openLanguageMenu, setOpenLanguageMenu] = useState(false);
   const [openSearchButton, setOpenSearchButton] = useState(false);
-
+  
   return (
     <div className="top-header">
       <div className="top-header-cad">
@@ -50,15 +50,30 @@ export function TopHeader({ cartsTotalQuantities }) {
           <input
             className="search-input-box"
             placeholder="Search Products"
+            value={searchText}
+            onChange={(e)=>setSearchText(e.target.value)}
           />
         )}
 
-        <button
-          onClick={() => {
-            setOpenSearchButton(!openSearchButton);
-          }}
-        >
-          <FaSearch />
+      <button
+        onClick={() => {
+        setOpenSearchButton(!openSearchButton);
+        if(openSearchButton==true){
+          const productsSection = document.getElementById('products-section');
+          if (productsSection) {
+          productsSection.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+        
+        }
+        }
+        
+
+        
+        }}
+      >
+        <FaSearch />
         </button>
       </div>
 

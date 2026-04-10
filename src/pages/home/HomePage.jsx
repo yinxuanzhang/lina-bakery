@@ -15,7 +15,31 @@ export function HomePage({ cartsTotalQuantities, loadCarts, loadPaymentSummary }
   ];
 
   const [products, setProducts] = useState([]);
+  const[searchText,setSearchText]=useState('');
+  function normalizeText(text){
+    return String(text).toLowerCase().replace(/[-\s]/g,'');
+  }
+  const filterProducts=products.map((productType)=>{
+    const keyWords=normalizeText(searchText.trim());
+    if(!keyWords){
+      return productType;
+    }
+    const titleMatched=normalizeText(productType.title).includes(keyWords);
+    if(titleMatched){
+      return productType;
+    }
+    const filteredItems=productType.items.filter((item)=>{
+      return normalizeText(item.code).includes(keyWords);
+    });
+    if (filteredItems.length==0){
+      return null;
+    }
+    return{
+      ...productType,
+      items:filteredItems
+    };
 
+  }).filter(Boolean);
   useEffect(() => {
     const timer = setInterval(() => {
       setBannerIndex((prev) =>
@@ -60,7 +84,7 @@ export function HomePage({ cartsTotalQuantities, loadCarts, loadPaymentSummary }
             );
           })}
 
-          <TopHeader cartsTotalQuantities={cartsTotalQuantities} />
+          <TopHeader cartsTotalQuantities={cartsTotalQuantities} searchText={searchText} setSearchText={setSearchText}/>
 
           <div className="main-nav">
             <div className="lina-bakery-logo">
@@ -88,8 +112,8 @@ export function HomePage({ cartsTotalQuantities, loadCarts, loadPaymentSummary }
         </div>
       </div>
 
-      <div className="products-section">
-        {products.map((productType) => {
+      <div className="products-section" id='products-section'>
+        {filterProducts.map((productType) => {
           return (
             <section
               className="product-series-section"
