@@ -36,7 +36,8 @@ export function OrderPage({ carts, orderPaymentSummary, loadCarts, loadPaymentSu
       customerName.trim() !== '' &&
       pickupDate.trim() !== '' &&
       phoneNumber.trim() !== '' &&
-      emailAddress.trim() !== ''
+      emailAddress.trim() !== ''&&
+      carts.length!==0
     ) {
       try {
         await makeAnOrder(customerName, pickupDate, phoneNumber, emailAddress, carts);

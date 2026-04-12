@@ -1,13 +1,29 @@
 import express from 'express';
-import { orders, addOrder } from '../data/orders.js';
+import { prisma } from '../prismaClient.js';
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.json(orders);
+router.get('/', async (req, res) => {
+  try {
+    const orders = await prisma.order.findMany({
+      include: {
+        items: true,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    res.json(orders);
+  } catch (error) {
+    console.error('Get orders error:', error);
+    res.status(500).json({
+      error: 'Failed to fetch orders',
+    });
+  }
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const {
     customerName,
     pickupDate,
@@ -17,16 +33,28 @@ router.post('/', (req, res) => {
     orderNumber
   } = req.body;
 
-  const newOrder = {
+  const newOrder = await prisma.order.create({
+   data:{ 
     orderNumber,
     customerName,
-    pickupDate,
+    pickupDate:new Date(pickupDate),
     phoneNumber,
     emailAddress,
-    carts
-  };
+    items:{
+      create:carts.map((item)=>({
+        productCode:item.code,
+        unitPriceCents:item.price,
+        quantity:item.quantity,
+        image:item.image?? null,
+      })),
+    },
+  },
+    include:{
+      items:true,
+    },
+  });
 
-  addOrder(newOrder);
+  
   res.status(201).json(newOrder);
 });
 

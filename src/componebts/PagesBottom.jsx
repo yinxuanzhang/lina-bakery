@@ -17,7 +17,7 @@ export function PagesBottom() {
           <div className="footer-single-information">Phone: 778-513-3120</div>
           <div className="footer-single-information">Email: 1789893950@qq.com</div>
           <div className="footer-single-information">
-            <a href="https://www.instagram.com/" target="_blank" rel="noreferrer">
+            <a href="https://www.instagram.com/lmlina929/" target="_blank" rel="noreferrer">
               Instagram
             </a>
           </div>

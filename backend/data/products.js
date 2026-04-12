@@ -31,31 +31,31 @@ export const products= [
       id: 21,
       code: 'J-05',
       price: 7000,
-      image: '/images/resources/cellImage_0_47.jpg'
+      image: '/images/resources/cellImage_0_47.png'
     },
     {
       id: 22,
       code: 'J-06',
       price: 7000,
-      image: '/images/resources/cellImage_0_54.jpg'
+      image: '/images/resources/cellImage_0_54.png'
     },
     {
       id: 23,
       code: 'J-07',
       price: 9000,
-      image: '/images/resources/cellImage_0_60.jpg'
+      image: '/images/resources/cellImage_0_60.png'
     },
     {
       id: 24,
       code: 'J-08',
       price: 12000,
-      image: '/images/resources/cellImage_0_66.jpg'
+      image: '/images/resources/cellImage_0_66.png'
     },
     {
       id: 25,
       code: 'J-09',
       price: 7000,
-      image: '/images/resources/cellImage_0_72.jpg'
+      image: '/images/resources/cellImage_0_72.png'
     }
   ]
 },
