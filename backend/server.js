@@ -13,6 +13,10 @@ const app=express();
 const port=3000;
 
 app.use(cors());
+app.post(
+  '/api/stripe-webhook',
+  express.raw({ type: 'application/json' })
+);
 app.use(express.json());
 
 app.use('/api',paymentRoutes);

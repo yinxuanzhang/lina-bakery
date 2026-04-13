@@ -5,20 +5,11 @@ import dayjs from 'dayjs';
 import './orderpage.css';
 import { useState, useEffect } from 'react';
 import { centsTobuck } from '../../../utils/money';
-import { v4 as uuidv4 } from 'uuid';
+
 import axios from 'axios';
 
 export function OrderPage({ carts, orderPaymentSummary, loadCarts, loadPaymentSummary }) {
-  async function makeAnOrder(customerName, pickupDate, phoneNumber, emailAddress, carts) {
-    await axios.post('http://localhost:3000/api/orders', {
-      orderNumber: uuidv4(),
-      customerName,
-      pickupDate,
-      phoneNumber,
-      emailAddress,
-      carts
-    });
-  }
+
 
   useEffect(() => {
     loadCarts();
@@ -40,11 +31,11 @@ export function OrderPage({ carts, orderPaymentSummary, loadCarts, loadPaymentSu
       carts.length!==0
     ) {
       try {
-        await makeAnOrder(customerName, pickupDate, phoneNumber, emailAddress, carts);
+        
 
         const response = await axios.post(
           'http://localhost:3000/api/create-checkout-session',
-          { carts, pickupDate }
+          { carts, pickupDate,customerName,phoneNumber,emailAddress}
         );
 
         window.location.href = response.data.url;
