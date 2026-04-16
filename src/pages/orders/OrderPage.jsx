@@ -21,7 +21,7 @@ export function OrderPage({ carts, orderPaymentSummary, loadCarts, loadPaymentSu
   const [customerName, setCustomerName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [emailAddress, setEmailAddress] = useState('');
-
+  
   async function checkOutConfirm() {
     if (
       customerName.trim() !== '' &&
@@ -39,6 +39,7 @@ export function OrderPage({ carts, orderPaymentSummary, loadCarts, loadPaymentSu
         );
 
         window.location.href = response.data.url;
+        
       } catch (error) {
         alert("Order failed. Please try again.");
       }

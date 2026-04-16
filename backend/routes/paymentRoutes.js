@@ -2,7 +2,7 @@ import express from 'express';
 import { stripe } from '../lib/stripe.js';
 import { v4 as uuidv4 } from 'uuid';
 import { prisma } from '../prismaClient.js';
-
+import { setCarts } from '../data/carts.js';
 const router = express.Router();
 
 async function createOrder({
@@ -59,7 +59,7 @@ router.post('/create-checkout-session', async (req, res) => {
         unit_amount: item.price,
       },
     }));
-
+    
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items,
@@ -76,7 +76,7 @@ router.post('/create-checkout-session', async (req, res) => {
         emailAddress,
       },
     });
-
+    setCarts([]);
     res.json({ url: session.url });
   } catch (error) {
     console.error('Stripe session error:', error);
@@ -140,7 +140,7 @@ router.post(
           emailAddress: session.metadata.emailAddress,
         });
       }
-
+      setCarts([]);
       res.sendStatus(200);
     } catch (error) {
       console.error('Webhook processing error:', error);

@@ -1,15 +1,19 @@
 import express from 'express';
-import { carts, setCarts } from '../data/carts.js';
+import { getCart,setCart } from '../data/carts.js';
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
+router.get('/:cartsId', (req, res) => {
+  const cartsId=req.params.cartsId
+  const carts=getCart(cartsId)
   res.json(carts);
 });
 
-router.get('/payment-summary', (req, res) => {
+router.get('/:cartsId/payment-summary', (req, res) => {
+  
+  const cartsId=req.params.cartsId;
+  const carts=getCart(cartsId);
   let priceBeforeTax = 0;
-
   carts.forEach((item) => {
     priceBeforeTax += item.price * item.quantity;
   });
@@ -21,31 +25,33 @@ router.get('/payment-summary', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const { code, price, image, quantity, estimatedCompletionDate } = req.body;
-
-  const existingItem = carts.find((item) => item.code === code);
+  //const { code, price, image, quantity, estimatedCompletionDate } = req.body;
+  const {cartsId,items}=req.body;
+  const carts=getCart(cartsId);
+  const existingItem = carts.find((item) => item.code === items.code);
 
   if (existingItem) {
-    existingItem.quantity += quantity;
+    existingItem.quantity += items.quantity;
     return res.json(existingItem);
   }
 
   const newCartItem = {
-    code,
-    price,
-    image,
-    quantity,
-    estimatedCompletionDate
+    code:items.code,
+    price:items.price,
+    image:items.image,
+    quantity:items.quantity,
+    estimatedCompletionDate:items.estimatedCompletionDate
   };
 
   carts.push(newCartItem);
+  setCart(cartsId,carts);
   res.status(201).json(newCartItem);
 });
 
 router.delete('/:code', (req, res) => {
   const cartItemCode = req.params.code;
   const newCarts = carts.filter((item) => item.code !== cartItemCode);
-  setCarts(newCarts);
+  setCart(newCarts);
   res.json(newCarts);
 });
 
@@ -57,7 +63,7 @@ router.put('/:code', (req, res) => {
 
   if (quantity <= 0) {
     const newCarts = carts.filter((item) => item.code !== cartItemCode);
-    setCarts(newCarts);
+    setCart(newCarts);
     return res.json(newCarts);
   }
 

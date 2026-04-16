@@ -7,7 +7,8 @@ import dayjs from 'dayjs';
 import { centsTobuck } from '../../../utils/money';
 import { Link } from 'react-router-dom';
 
-export function HomePage({ cartsTotalQuantities, loadCarts, loadPaymentSummary }) {
+
+export function HomePage({ cartsTotalQuantities, loadCarts, loadPaymentSummary,cartsId }) {
   const [bannerIndex, setBannerIndex] = useState(0);
   const bannerPages = [
     '/images/lina-slider1.png',
@@ -57,14 +58,17 @@ export function HomePage({ cartsTotalQuantities, loadCarts, loadPaymentSummary }
     return () => clearInterval(timer);
   }, []);
 
-  async function addToCart(item) {
-    const request = await axios.post('http://localhost:3000/api/carts', {
+  async function addToCart(item,cartsId) {
+    const request = await axios.post('http://localhost:3000/api/carts', 
+      {cartsId:cartsId,
+      items:{
       code: item.code,
       price: item.price,
       image: item.image,
       quantity: 1,
       estimatedCompletionDate: dayjs().add(5, 'day').format('MMMM D')
-    });
+    }
+  });
 
     return request.data;
   }
@@ -147,7 +151,7 @@ export function HomePage({ cartsTotalQuantities, loadCarts, loadPaymentSummary }
                         {canAddToCart ? (
                           <button
                             onClick={async () => {
-                              await addToCart(item);
+                              await addToCart(item,cartsId);
                               await loadCarts();
                               await loadPaymentSummary();
                             }}
