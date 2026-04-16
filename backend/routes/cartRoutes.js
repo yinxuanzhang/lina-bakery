@@ -48,14 +48,18 @@ router.post('/', (req, res) => {
   res.status(201).json(newCartItem);
 });
 
-router.delete('/:code', (req, res) => {
+router.delete('/:cartsId/:code', (req, res) => {
+  const cartsId=req.params.cartsId;
   const cartItemCode = req.params.code;
+  const carts=getCart(cartsId);
   const newCarts = carts.filter((item) => item.code !== cartItemCode);
-  setCart(newCarts);
+  setCart(cartsId,newCarts);
   res.json(newCarts);
 });
 
-router.put('/:code', (req, res) => {
+router.put('/:cartsId/:code', (req, res) => {
+  const cartsId=req.params.cartsId;
+  const carts=getCart(cartsId);
   const cartItemCode = req.params.code;
   const { quantity } = req.body;
 
@@ -63,7 +67,7 @@ router.put('/:code', (req, res) => {
 
   if (quantity <= 0) {
     const newCarts = carts.filter((item) => item.code !== cartItemCode);
-    setCart(newCarts);
+    setCart(cartsId,newCarts);
     return res.json(newCarts);
   }
 

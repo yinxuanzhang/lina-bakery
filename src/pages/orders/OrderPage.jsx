@@ -8,7 +8,7 @@ import { centsTobuck } from '../../../utils/money';
 
 import axios from 'axios';
 
-export function OrderPage({ carts, orderPaymentSummary, loadCarts, loadPaymentSummary }) {
+export function OrderPage({ cartsId,carts, orderPaymentSummary, loadCarts, loadPaymentSummary }) {
 
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export function OrderPage({ carts, orderPaymentSummary, loadCarts, loadPaymentSu
 
         const response = await axios.post(
           'http://localhost:3000/api/create-checkout-session',
-          { carts, pickupDate,customerName,phoneNumber,emailAddress}
+          { cartsId,pickupDate,customerName,phoneNumber,emailAddress}
         );
 
         window.location.href = response.data.url;

@@ -91,32 +91,32 @@ export const products= [
       id: 30,
       code: 'D-05',
       price: 8000,
-      image: '/images/resources/cellImage_0_48.jpg'
+      image: '/images/resources/cellImage_0_48.png'
     },
     {
       id: 31,
       code: 'D-06',
       price: 7000,
-      image: '/images/resources/cellImage_0_55.jpg'
+      image: '/images/resources/cellImage_0_55.png'
     },
     {
       id: 32,
       code: 'D-07',
       price: 7000,
-      image: '/images/resources/cellImage_0_61.jpg'
+      image: '/images/resources/cellImage_0_61.png'
     },
     {
       id: 33,
       code: 'D-08',
       price: 13000,
-      image: '/images/resources/cellImage_0_67.jpg',
+      image: '/images/resources/cellImage_0_67.png',
       
     },
     {
       id: 34,
       code: 'D-09',
       price: 8000,
-      image: '/images/resources/cellImage_0_73.jpg'
+      image: '/images/resources/cellImage_0_73.png'
     }
   ]
 },

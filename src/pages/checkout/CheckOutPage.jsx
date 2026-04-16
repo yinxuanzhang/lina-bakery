@@ -11,17 +11,18 @@ export function CheckOutPage({
   cartsTotalQuantities,
   loadCarts,
   orderPaymentSummary,
-  loadPaymentSummary
+  loadPaymentSummary,
+  cartsId
 }) {
   async function deleteCartItem(code) {
-    await axios.delete(`http://localhost:3000/api/carts/${code}`);
+    await axios.delete(`http://localhost:3000/api/carts/${cartsId}/${code}`);
     await loadCarts();
     await loadPaymentSummary();
   }
 
   async function minusOneToCart(cartItem) {
     if (cartItem.quantity <= 1) return;
-    await axios.put(`http://localhost:3000/api/carts/${cartItem.code}`, {
+    await axios.put(`http://localhost:3000/api/carts/${cartsId}/${cartItem.code}`, {
       quantity: cartItem.quantity - 1
     });
     await loadCarts();
@@ -29,7 +30,7 @@ export function CheckOutPage({
   }
 
   async function addOneToCart(cartItem) {
-    await axios.put(`http://localhost:3000/api/carts/${cartItem.code}`, {
+    await axios.put(`http://localhost:3000/api/carts/${cartsId}/${cartItem.code}`, {
       quantity: cartItem.quantity + 1
     });
     await loadCarts();

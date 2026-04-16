@@ -2,10 +2,12 @@ import express from 'express';
 import { stripe } from '../lib/stripe.js';
 import { v4 as uuidv4 } from 'uuid';
 import { prisma } from '../prismaClient.js';
-import { setCarts } from '../data/carts.js';
+import { getCart, setCart } from '../data/carts.js';
+import { sendOrderConfirmationEmail } from '../lib/sendOrderConfirmationEmail.js';
 const router = express.Router();
 
 async function createOrder({
+  
   carts,
   pickupDate,
   customerName,
@@ -13,7 +15,8 @@ async function createOrder({
   emailAddress,
   orderNumber,
 }) {
-  return prisma.order.create({
+
+  return prisma.order.create({  
     data: {
       orderNumber,
       pickupDate: new Date(pickupDate),
@@ -37,8 +40,8 @@ async function createOrder({
 
 router.post('/create-checkout-session', async (req, res) => {
   try {
-    const { carts, pickupDate, customerName, phoneNumber, emailAddress } = req.body;
-
+    const { cartsId, pickupDate, customerName, phoneNumber, emailAddress } = req.body;
+    const carts=getCart(cartsId);
     if (!Array.isArray(carts) || carts.length === 0) {
       return res.status(400).json({ message: 'Cart is empty' });
     }
@@ -69,6 +72,7 @@ router.post('/create-checkout-session', async (req, res) => {
       cancel_url: `${process.env.CLIENT_URL}/order`,
       client_reference_id: orderNumber,
       metadata: {
+        cartsId,
         orderNumber,
         pickupDate,
         customerName,
@@ -76,7 +80,7 @@ router.post('/create-checkout-session', async (req, res) => {
         emailAddress,
       },
     });
-    setCarts([]);
+    
     res.json({ url: session.url });
   } catch (error) {
     console.error('Stripe session error:', error);
@@ -139,8 +143,20 @@ router.post(
           phoneNumber: session.metadata.phoneNumber,
           emailAddress: session.metadata.emailAddress,
         });
+        try{
+          await sendOrderConfirmationEmail({
+          emailAddress: session.metadata.emailAddress,
+          customerName: session.metadata.customerName,
+          orderNumber: session.metadata.orderNumber,
+          pickupDate: session.metadata.pickupDate,
+          });
+        }catch (emailError){
+          console.error('failed to send email',emailError.message);
+        }
+        setCart(session.metadata.cartsId,[]);
       }
-      setCarts([]);
+
+    
       res.sendStatus(200);
     } catch (error) {
       console.error('Webhook processing error:', error);
