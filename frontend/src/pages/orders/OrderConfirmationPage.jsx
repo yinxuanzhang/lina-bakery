@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { FaCheckCircle } from 'react-icons/fa';
-import { PagesBottom } from '../../componebts/PageSBottom';
+import { PagesBottom } from '../../components/PageSBottom';
 import './OrderConfirmationPage.css';
 
 export function OrderConfirmationPage() {

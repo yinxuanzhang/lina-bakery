@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { FaShoppingBag } from "react-icons/fa";
-import { PagesBottom } from '../../componebts/PageSBottom';
+import { PagesBottom } from '../../components/PageSBottom';
 import dayjs from 'dayjs';
 import './orderpage.css';
 import { useState, useEffect } from 'react';

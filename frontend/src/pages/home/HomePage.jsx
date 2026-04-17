@@ -1,8 +1,8 @@
 import './homepage.css';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { TopHeader } from '../../componebts/TopHeader';
-import { PagesBottom } from '../../componebts/PageSBottom';
+import { TopHeader } from '../../components/TopHeader';
+import { PagesBottom } from '../../components/PageSBottom';
 import dayjs from 'dayjs';
 import { centsTobuck } from '../../../utils/money';
 import { Link } from 'react-router-dom';

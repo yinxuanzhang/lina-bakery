@@ -1,6 +1,6 @@
 import './aboutlina.css';
-import { TopHeader } from '../../componebts/TopHeader';
-import { PagesBottom } from '../../componebts/PageSBottom';
+import { TopHeader } from '../../components/TopHeader';
+import { PagesBottom } from '../../components/PageSBottom';
 import { Link } from 'react-router-dom';
 
 export function AboutLinaPage({ cartsTotalQuantities }) {
