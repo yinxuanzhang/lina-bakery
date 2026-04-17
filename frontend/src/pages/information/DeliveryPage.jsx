@@ -1,6 +1,6 @@
 import './deliverypage.css';
 import { TopHeader } from '../../components/TopHeader';
-import { PagesBottom } from '../../components/PageSBottom';
+import { PagesBottom } from '../../components/PagesBottom';
 import { Link } from 'react-router-dom';
 
 export function DeliveryPage({ cartsTotalQuantities }) {
