@@ -1,4 +1,4 @@
-import { PagesBottom } from '../../components/PageSBottom';
+import { PagesBottom } from '../../components/PagesBottom';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart } from "react-icons/fa";
 import axios from 'axios';
