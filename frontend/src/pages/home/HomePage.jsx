@@ -13,12 +13,20 @@ export function HomePage({ cartsTotalQuantities, loadCarts, loadPaymentSummary,c
   const bannerPages = [
     '/images/lina-slider1.png',
     '/images/lina-slider2.png'
+    
   ];
-
+  
   const [products, setProducts] = useState([]);
   const[searchText,setSearchText]=useState('');
   function normalizeText(text){
     return String(text).toLowerCase().replace(/[-\s]/g,'');
+  }
+  const[addedCode,setAddedCode]=useState(null);
+  function changeToAdded(item){
+    setAddedCode(item.code);
+    setTimeout(()=>{setAddedCode(null)},
+    3000
+  );
   }
   const filterProducts=products.map((productType)=>{
     const keyWords=normalizeText(searchText.trim());
@@ -149,16 +157,19 @@ export function HomePage({ cartsTotalQuantities, loadCarts, loadPaymentSummary,c
                         )}
 
                         {canAddToCart ? (
-                          <button
+
+                         <button
                             onClick={async () => {
                               await addToCart(item,cartsId);
                               await loadCarts();
                               await loadPaymentSummary();
-                            }}
+                              changeToAdded(item)
+                            }} 
                           >
-                            Add
-                          </button>
-                        ) : (
+                            {addedCode==item.code? 'Added' :'Add'}
+                          </button>) 
+                          
+                         : (
                           <button disabled>
                             Contact Us
                           </button>
