@@ -10,6 +10,7 @@ import {Routes,Route} from 'react-router-dom';
 import { useState,useEffect } from "react";
 import axios from "axios";
 import{v4 as uuidv4} from 'uuid';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 function App() {
   function getOrCreateCartsId(){
     let cartsId=localStorage.getItem("cartsId");
@@ -24,11 +25,11 @@ function App() {
   const[cartsId]=useState(()=>getOrCreateCartsId());
   console.log(cartsId);
   async function loadCarts(){
-    const response= await axios.get(`http://localhost:3000/api/carts/${cartsId}`);
+    const response= await axios.get(`${API_BASE_URL}/api/carts/${cartsId}`);
     setCarts(response.data);
    }
   async function loadPaymentSummary(){
-    const response= await axios.get(`http://localhost:3000/api/carts/${cartsId}/payment-summary`);
+    const response= await axios.get(`${API_BASE_URL}/api/carts/${cartsId}/payment-summary`);
     SetOrderPaymnetSummary(response.data);
    }
    
@@ -51,9 +52,9 @@ function App() {
   return (
     <>
       <Routes>
-      <Route index element={<HomePage cartsTotalQuantities={cartsTotalQuantities} loadCarts={loadCarts} conutCartQuantity={conutCartQuantity} loadPaymentSummary={loadPaymentSummary} cartsId={cartsId}/>}/>
-      <Route path="checkout" element={<CheckOutPage carts={carts} cartsTotalQuantities={cartsTotalQuantities} loadCarts={loadCarts} orderPaymentSummary={orderPaymentSummary} loadPaymentSummary={loadPaymentSummary} cartsId={cartsId}/>}/>
-      <Route path="order" element={<OrderPage cartsId={cartsId} carts={carts} orderPaymentSummary={orderPaymentSummary} loadCarts={loadCarts} loadPaymentSummary={loadPaymentSummary}/>}/>
+      <Route index element={<HomePage API_BASE_URL={API_BASE_URL} cartsTotalQuantities={cartsTotalQuantities} loadCarts={loadCarts} conutCartQuantity={conutCartQuantity} loadPaymentSummary={loadPaymentSummary} cartsId={cartsId}/>}/>
+      <Route path="checkout" element={<CheckOutPage API_BASE_URL={API_BASE_URL} carts={carts} cartsTotalQuantities={cartsTotalQuantities} loadCarts={loadCarts} orderPaymentSummary={orderPaymentSummary} loadPaymentSummary={loadPaymentSummary} cartsId={cartsId}/>}/>
+      <Route path="order" element={<OrderPage API_BASE_URL={API_BASE_URL} cartsId={cartsId} carts={carts} orderPaymentSummary={orderPaymentSummary} loadCarts={loadCarts} loadPaymentSummary={loadPaymentSummary}/>}/>
       <Route path="user" element={<UserPage />}/>
       
       

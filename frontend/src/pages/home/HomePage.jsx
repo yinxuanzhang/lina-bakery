@@ -8,7 +8,7 @@ import { centsTobuck } from '../../../utils/money';
 import { Link } from 'react-router-dom';
 
 
-export function HomePage({ cartsTotalQuantities, loadCarts, loadPaymentSummary,cartsId }) {
+export function HomePage({ API_BASE_URL,cartsTotalQuantities, loadCarts, loadPaymentSummary,cartsId }) {
   const [bannerIndex, setBannerIndex] = useState(0);
   const bannerPages = [
     '/images/lina-slider1.png',
@@ -57,7 +57,7 @@ export function HomePage({ cartsTotalQuantities, loadCarts, loadPaymentSummary,c
     }, 3000);
 
     async function loadProducts() {
-      const response = await axios.get('http://localhost:3000/api/products');
+      const response = await axios.get(`${API_BASE_URL}/api/products`);
       setProducts(response.data);
     }
 
@@ -67,7 +67,7 @@ export function HomePage({ cartsTotalQuantities, loadCarts, loadPaymentSummary,c
   }, []);
 
   async function addToCart(item,cartsId) {
-    const request = await axios.post('http://localhost:3000/api/carts', 
+    const request = await axios.post(`${API_BASE_URL}/api/carts`, 
       {cartsId:cartsId,
       items:{
       code: item.code,

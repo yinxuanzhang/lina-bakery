@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { centsTobuck } from '../../../utils/money';
 
 export function CheckOutPage({
+  API_BASE_URL,
   carts,
   cartsTotalQuantities,
   loadCarts,
@@ -15,14 +16,14 @@ export function CheckOutPage({
   cartsId
 }) {
   async function deleteCartItem(code) {
-    await axios.delete(`http://localhost:3000/api/carts/${cartsId}/${code}`);
+    await axios.delete(`${API_BASE_URL}/api/carts/${cartsId}/${code}`);
     await loadCarts();
     await loadPaymentSummary();
   }
 
   async function minusOneToCart(cartItem) {
     if (cartItem.quantity <= 1) return;
-    await axios.put(`http://localhost:3000/api/carts/${cartsId}/${cartItem.code}`, {
+    await axios.put(`${API_BASE_URL}/api/carts/${cartsId}/${cartItem.code}`, {
       quantity: cartItem.quantity - 1
     });
     await loadCarts();
@@ -30,7 +31,7 @@ export function CheckOutPage({
   }
 
   async function addOneToCart(cartItem) {
-    await axios.put(`http://localhost:3000/api/carts/${cartsId}/${cartItem.code}`, {
+    await axios.put(`${API_BASE_URL}/api/carts/${cartsId}/${cartItem.code}`, {
       quantity: cartItem.quantity + 1
     });
     await loadCarts();

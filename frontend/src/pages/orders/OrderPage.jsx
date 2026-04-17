@@ -8,7 +8,7 @@ import { centsTobuck } from '../../../utils/money';
 
 import axios from 'axios';
 
-export function OrderPage({ cartsId,carts, orderPaymentSummary, loadCarts, loadPaymentSummary }) {
+export function OrderPage({API_BASE_URL, cartsId,carts, orderPaymentSummary, loadCarts, loadPaymentSummary }) {
 
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export function OrderPage({ cartsId,carts, orderPaymentSummary, loadCarts, loadP
         
 
         const response = await axios.post(
-          'http://localhost:3000/api/create-checkout-session',
+          `${API_BASE_URL}/api/create-checkout-session`,
           { cartsId,pickupDate,customerName,phoneNumber,emailAddress}
         );
 
