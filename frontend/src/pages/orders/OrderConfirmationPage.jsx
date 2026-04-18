@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { FaCheckCircle } from 'react-icons/fa';
 import { PagesBottom } from '../../components/PagesBottom';
-import './OrderConfirmationPage.css';
+import './orderconfirmationpage.css';
 
 export function OrderConfirmationPage() {
   const location = useLocation();
