@@ -8,7 +8,7 @@ export async function sendOrderConfirmationEmail(
 }
 ){
   const{data,error}=await resend.emails.send({
-    from:'onboarding@resend.dev',
+    from:'orders@kkmacakes.com',
     to:[emailAddress],
     subject: 'Your Lina Bakery order confirmation',
     html:`
