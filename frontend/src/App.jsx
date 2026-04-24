@@ -43,7 +43,7 @@ function App() {
     if(!carts) return 0;
     let quantity=0;
     carts.forEach((cartItem)=>{
-      quantity+=cartItem.quantity;//可不可以直接这样
+      quantity+=cartItem.quantity;
     });
     return quantity;
    }

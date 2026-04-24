@@ -19,7 +19,7 @@ export function DeliveryPage({ cartsTotalQuantities }) {
             <ul className="ul-list">
               <li><Link to="/">Home</Link></li>
               <li><Link to="/delivery-page">Delivery Information</Link></li>
-              <li><Link to="/about-lina">About Lina</Link></li>
+              <li><Link to="/about-lina">About Brand</Link></li>
             </ul>
           </div>
 

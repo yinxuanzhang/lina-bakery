@@ -158,7 +158,7 @@ export function CheckOutPage({
               </div>
 
               <div className="payment-summary-row">
-                <div>Estimated tax (10%):</div>
+                <div>Estimated tax (12%):</div>
                 <div className="payment-summary-money">
                   ${centsTobuck(orderPaymentSummary.estimatedTax) || 0}
                 </div>

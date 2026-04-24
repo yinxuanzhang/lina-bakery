@@ -19,7 +19,7 @@ export function AboutLinaPage({ cartsTotalQuantities }) {
             <ul className="ul-list">
               <li><Link to="/">Home</Link></li>
               <li><Link to="/delivery-page">Delivery Information</Link></li>
-              <li><Link to="/about-lina">About Lina</Link></li>
+              <li><Link to="/about-lina">About Brand</Link></li>
             </ul>
           </div>
 
@@ -33,7 +33,7 @@ export function AboutLinaPage({ cartsTotalQuantities }) {
         <div className="about-card">
           <h2>Our Story</h2>
           <p>
-            Lina was born from a genuine love for desserts and the joy they bring to everyday life.
+            KK was born from a genuine love for desserts and the joy they bring to everyday life.
           </p>
           <p>
             We believe that every cake and every sweet creation should feel warm, thoughtful, and special.
@@ -45,7 +45,7 @@ export function AboutLinaPage({ cartsTotalQuantities }) {
             We carefully choose quality ingredients to create desserts that not only look beautiful, but also taste memorable.
           </p>
           <p>
-            At Lina, baking is more than making sweets — it is a way of sharing comfort, happiness, and love.
+            At KK, baking is more than making sweets — it is a way of sharing comfort, happiness, and love.
           </p>
         </div>
 

@@ -378,12 +378,12 @@
   }
 
   .products-Gride {
-    grid-template-columns: 1fr;
-    gap: 22px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
   .products-Gride .product img {
-    height: 260px;
+    height: 180px;
   }
 
   .each-product-info {
