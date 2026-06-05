@@ -35,3 +35,19 @@ model OrderItem{
 
   order           Order     @relation(fields: [orderNumber], references: [orderNumber],onDelete: Cascade)    
 }
+model Series {
+  seriesId        String @id  @default(cuid())
+  seriesName      String @unique
+  
+  createdAt       DateTime @default(now())
+  products        Product[]
+}
+model Product{
+  productId       String @id @default(cuid())
+  code            String @unique
+  image           String
+  priceCents      Int?
+  
+  seriesId        String
+  series          Series @relation(fields: [seriesId], references: [seriesId])
+}
