@@ -191,12 +191,12 @@ export function OrderPage({API_BASE_URL, cartsId,carts, orderPaymentSummary, loa
 
               <div className="order-summary-row">
                 <div>Tax</div>
-                <div>${centsTobuck(orderPaymentSummary.estimatedTax) || 0}</div>
+                <div>0</div>
               </div>
 
               <div className="order-summary-row total">
                 <div>Total</div>
-                <div>${centsTobuck(orderPaymentSummary.totalPrice) || 0}</div>
+                <div>${centsTobuck(orderPaymentSummary.priceBeforeTax) || 0}</div>
               </div>
 
               <div className="order-button-group">
